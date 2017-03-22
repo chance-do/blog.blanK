@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{{ partial "header.html" . }} 
+<!-- single -->
+{{ .Next }}
+{{.Next.Permalink}}
+<body>
+    <div class="wrap">
+        {{ partial "subheader.html" . }}
+
+        <main class="container">
+
+            {{ if .Params.toc }}
+            <div id="toc" class="well col-md-4 col-sm-6">
+                {{ .TableOfContents }}
+            </div>
+            {{ end }}
+
+            <div class="post">
+                <article class="post-block">
+                    <h1 class="post-title">{{ .Title }}</h1>
+                    <div class="post-info">
+                   <p class="post-byline">
+                    By {{ .GetParam "author" }} · {{ .Date.Format "Jan 2, 2006" }} · {{ .WordCount }} Words
+                     · ~{{ .ReadingTime }} min
+                  </p>
+                    </div>
+
+                    <div class="post-content">
+                        {{ .Content }}
+                    </div>
+                </article>
+            </div>
+        </main>
+        <div class="paginator">
+        {{if .Prev}}
+            <a href="{{ .Prev.Permalink }}" class="prev">
+                PREV</a> 
+        {{ end }}
+
+        {{if .Next}}
+            <a href="{{ .Next.Permalink}}" class="next">NEXT</a> 
+        {{ end }}
+
+    </div>
+    {{ partial "footer.html" }}

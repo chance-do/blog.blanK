@@ -1,0 +1,12 @@
+<!--footer-->
+<div class="paginator">
+{{.Next.Title}}
+	{{if .Prev}}
+    <a href="{{ .Prev.Permalink }}" class="prev">PREV: {{.Prev.Title}}</a> 
+    {{ end }} 
+
+    {{if .Next}}
+    <a href="{{ .Next.Permalink}}" class="next">NEXT: {{.Next.Title}}</a> 
+    {{ end }}
+
+</div>
