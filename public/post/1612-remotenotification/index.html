@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="keywords" content="iOS, Objective-C, ">
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+    <base href="https://mjyi.github.io/">
+    <title> iOS:关于iOS的推送 - blanK</title>
+    <link rel="canonical" href="https://mjyi.github.io/post/1612-remotenotification/">
+    
+
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/static/css/style.css">
+
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+</head>
+
+<body lang="en" itemscope itemtype="http://schema.org/Article">
+<header id="header">
+    
+      
+    
+    
+	<nav id="nav">
+	<div id="title"><a href="/">blanK's Blog</a></div>
+	</nav>
+    <nav id="nav">
+    <ul id="mainnav">
+    <li><a href="/">
+            <span class="icon"><i aria-hidden="true" class="icon-home"></i></span>
+            <span>首页</span>
+        </a>
+    </li>
+    <li><a href="/post/">
+            <span class="icon"> <i aria-hidden="true" class="icon-quill"></i></span>
+            <span>技术</span>
+        </a>
+    </li>
+    <li><a href="/daily/">
+            <span class="icon"> <i aria-hidden="true" class="icon-pencil"></i></span>
+            <span>日常</span>
+         </a>
+    </li>
+    <li><a href="/about">
+            <span class="icon"> <i aria-hidden="true" class="icon-info"></i></span>
+            <span>关于</span>
+        </a>
+    </li>
+</ul>
+
+    <ul id="social">
+    
+    <li id="follow">
+        
+        <span class="title"> links </span>
+        <div class="dropdown follow">
+            <ul class="social">
+                <li><a href="https://github.com/mjyi" target="_blank" title="Github" class="github">Github</a></li>
+                <li><a href="https://gohugo.io/" target="_blank" title="Hugo" class="twitter">Hugo</a></li>
+                <li><a href="" target="-_blank" title="Weibo" class="googleplus">Weibo</a></li>
+                <li><a href="mailto:huy948946@gmail.com" target="_blank" title="E-mail" class="facebook">E-mail</a></li>
+                <li><a href="" target="_blank" title="RSS" class="rss">RSS</a></li>
+                
+            </ul>
+            
+            <span class="icon icon-rocket"> </span> <span class="subcount"></span> </div>
+        </div>
+    </li>
+</ul>
+
+    </nav>
+</header>
+
+
+
+<section id="main">
+  <h1 itemprop="name" id="title">iOS:关于iOS的推送</h1>
+  <div>
+        <article itemprop="articleBody" id="content">
+           <p>苹果的在iOS 10 中将通知相关的API统一成了<code>UserNotifications.framework</code>。在新的<code>UserNotifications.framework</code>中，苹果还增加了撤回单条通知，更新已展示同比，中途修改通知内容，在通知中展示图片、视频，自定义通知UI等一系列新功能。</p>
+
+<h3 id="ios-10中使用远程推送">iOS 10中使用远程推送</h3>
+
+<p>在<code>Project</code> -&gt; <code>Project Setting</code> - &gt; <code>Capabilities</code>, 打开 <code>Push Notifications</code> 开关。</p>
+
+<h3 id="注册通知">注册通知</h3>
+
+<p>注册通知在<code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions NS_AVAILABLE_IOS(3_0);</code> 方法里。</p>
+
+<p><code>iOS 10</code>使用<code>- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;</code> 方法来注册通知。
+
+导入 <code>#import &lt;UserNotifications/UserNotifications.h&gt;</code></p>
+
+<pre><code class="language-obj-c">        // 使用 UNUserNotificationCenter 来管理通知
+        UNUserNotificationCenter *uncenter = [UNUserNotificationCenter currentNotificationCenter];
+        // 监听回调事件
+        [uncenter setDelegate:self];
+        [uncenter requestAuthorizationWithOptions:(UNAuthorizationOptionAlert+UNAuthorizationOptionBadge+UNAuthorizationOptionSound)
+                                completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                    [[UIApplication sharedApplication] registerForRemoteNotifications];
+                                    NSLog(@&quot;%@&quot; , granted ? @&quot;授权成功&quot; : @&quot;授权失败&quot;);
+                                }];
+        // 获取当前的通知授权状态, UNNotificationSettings
+        [uncenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            NSLog(@&quot;%s\nline:%@\n-----\n%@\n\n&quot;, __func__, @(__LINE__), settings);
+            if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
+                NSLog(@&quot;未选择&quot;);
+            } else if (settings.authorizationStatus == UNAuthorizationStatusDenied) {
+                NSLog(@&quot;未授权&quot;);
+            } else if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
+                NSLog(@&quot;已授权&quot;);
+            }
+        }];
+</code></pre>
+
+<p>上面的方法只在<code>ios 10</code>中有效， 所以要想兼容之前的版本，还是需要适配</p>
+
+<pre><code class="language-obj-c">- (void)registerForRemoteNotification {
+    // iOS10 兼容
+    if ([[UIDevice currentDevice].systemVersion floatValue] &gt;= 10.0) {
+        // 使用 UNUserNotificationCenter 来管理通知
+        UNUserNotificationCenter *uncenter = [UNUserNotificationCenter currentNotificationCenter];
+        // 监听回调事件
+        [uncenter setDelegate:self];
+        [uncenter requestAuthorizationWithOptions:(UNAuthorizationOptionAlert+UNAuthorizationOptionBadge+UNAuthorizationOptionSound)
+                                completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                    [[UIApplication sharedApplication] registerForRemoteNotifications];
+                                    NSLog(@&quot;%@&quot; , granted ? @&quot;授权成功&quot; : @&quot;授权失败&quot;);
+                                }];
+        // 获取当前的通知授权状态, UNNotificationSettings
+        [uncenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            NSLog(@&quot;%s\nline:%@\n-----\n%@\n\n&quot;, __func__, @(__LINE__), settings);
+            if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
+                NSLog(@&quot;未选择&quot;);
+            } else if (settings.authorizationStatus == UNAuthorizationStatusDenied) {
+                NSLog(@&quot;未授权&quot;);
+            } else if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
+                NSLog(@&quot;已授权&quot;);
+            }
+        }];
+    }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored &quot;-Wdeprecated-declarations&quot;
+    if ([[UIDevice currentDevice].systemVersion floatValue] &gt;= 8.0) {
+        UIUserNotificationType types = UIUserNotificationTypeAlert |
+        UIUserNotificationTypeBadge |
+        UIUserNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        UIRemoteNotificationType types = UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeAlert |
+        UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:types];
+    }
+#pragma clang diagnostic pop
+}
+</code></pre>
+
+<p>注册结果的回调还是<code>AppDelegate</code>的代理方法。</p>
+
+<pre><code class="language-obj-c">- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *token = [NSString stringWithFormat:@&quot;%@&quot;, deviceToken];
+    NSString *dt = [token stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@&quot;&lt;&gt;&quot;]];
+    NSString *dn = [dt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    TheRuntime.pushToken = [dn stringByReplacingOccurrencesOfString:@&quot; &quot; withString:@&quot;&quot;];
+    DDLog(@&quot;deviceToken____: %@&quot;,TheRuntime.pushToken);
+}
+
+//查看推送功能是否失败
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSString *error_str = [NSString stringWithFormat: @&quot;%@&quot;, error];
+    DDLog(@&quot;Token Error: %@&quot;,error_str);
+}
+</code></pre>
+
+<h3 id="响应通知">响应通知</h3>
+
+<h4 id="ios-10-之前版本">iOS 10 之前版本</h4>
+
+<p>在<code>iOS 10</code>之前的版本中，当应用是被通知打开的时候,可以通过 <code>application:didFinishLaunchingWithOptions:</code>方法的<code>launchOptions</code> 参数所使用的 <code>dictionary</code>访问到数据：</p>
+
+<pre><code class="language-obj-c">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    . . .
+    if ([[UIDevice currentDevice].systemVersion floatValue] &lt; 10.0) {
+        NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+		if (notificationPayload) {
+			NSLog(@&quot;%@&quot;,notificationPayload);
+		} 
+    }
+    return YES;
+}
+</code></pre>
+
+<p>如果当通知到达的时候，你的应用已经在运行，通过 <code>application:didReceiveRemoteNotification:fetchCompletionHandler:</code> 方法的 <code>userInfo</code> 参数所使用 <code>dictionary</code>访问到数据:</p>
+
+<pre><code class="language-obj-c"> //  Required for iOS 7+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    //处理远程推送内容
+    NSLog(@&quot;iOS7及以上系统，收到通知:%@&quot;, userInfo);
+}
+</code></pre>
+
+<p>iOS10 以上需要使用下面代理方法来获得 <code>userInfo</code>：</p>
+
+<pre><code class="language-obj-c">//  在前台收到推送内容, 执行的方法
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        //TODO:处理远程推送内容
+        NSLog(@&quot;%@&quot;, userInfo);
+    }
+    // 需要执行这个方法，选择是否提醒用户，有 Badge、Sound、Alert 三种类型可以选择设置
+    completionHandler(UNNotificationPresentationOptionAlert);
+}
+
+// 在后台和启动之前收到推送内容, 点击推送内容后，执行的方法
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)())completionHandler {
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        //TODO:处理远程推送内容
+        NSLog(@&quot;%@&quot;, userInfo);
+    }
+    completionHandler();
+}
+</code></pre>
+
+<p>最后附上2篇参考文章：</p>
+
+<p><a href="https://onevcat.com/2016/08/notification/">活久见的重构 - iOS 10 UserNotifications 框架解析</a></p>
+
+<p><a href="ttps://www.sitepoint.com/developing-push-notifications-for-ios-10/">Developing Push Notifications for iOS 10</a></p>
+        </article>
+  </div>
+</section>
+
+
+
+<aside id="meta">
+
+    <div>
+        <section id="datecount">
+          <h4 id="date"> Fri Dec 23, 2016 </h4>
+          <h5 id="wc"> 500 Words </h5>
+          <h5 id="readtime"> Read in about 3 Min </h5>
+        </section>
+        <ul id="categories">
+          
+        </ul>
+        <ul id="tags">
+          
+            <li> <a href="https://mjyi.github.io//tags/ios">iOS</a> </li>
+          
+            <li> <a href="https://mjyi.github.io//tags/objective-c">Objective-C</a> </li>
+          
+        </ul>
+    </div>
+
+    <div>
+        <section id="prev">
+            &nbsp;<a class="previous" href="https://mjyi.github.io/post/1612-arc-in-swift/"><i class="icon-arrow-left"></i> Swift:Automatic Reference Counting in Swift</a><br>
+        </section><section id="next">
+            &nbsp;<a class="next" href="https://mjyi.github.io/post/1612-hexo-tag/">Hexo常用的内置标签记录 <i class="icon-arrow-right"></i></a>
+        </section>
+    </div>
+
+
+
+</aside>
+
+<meta itemprop="wordCount" content="435">
+<meta itemprop="datePublished" content="2016-12-23">
+<meta itemprop="url" content="https://mjyi.github.io/post/1612-remotenotification/">
+
+
+<aside id=comments>
+    <div><h2> Comments </h2></div>
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mjyi-io';
+    var disqus_identifier = 'https:\/\/mjyi.github.io\/post\/1612-remotenotification\/';
+    var disqus_title = 'iOS:关于iOS的推送';
+    var disqus_url = 'https:\/\/mjyi.github.io\/post\/1612-remotenotification\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</aside>
+
+<footer>
+  <div>
+    <p>
+    &copy; 2015-17 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">blanK.</span></span>
+    Powered by <a href="http://gohugo.io">Hugo</a>.
+    </p>
+  </div>
+</footer>
+<script type="text/javascript">
+(function(){var j=function(a,b){return window.getComputedStyle?getComputedStyle(a).getPropertyValue(b):a.currentStyle[b]};var k=function(a,b,c){if(a.addEventListener)a.addEventListener(b,c,false);else a.attachEvent('on'+b,c)};var l=function(a,b){for(key in b)if(b.hasOwnProperty(key))a[key]=b[key];return a};window.fitText=function(d,e,f){var g=l({'minFontSize':-1/0,'maxFontSize':1/0},f);var h=function(a){var b=e||1;var c=function(){a.style.fontSize=Math.max(Math.min(a.clientWidth/(b*10),parseFloat(g.maxFontSize)),parseFloat(g.minFontSize))+'px'};c();k(window,'resize',c)};if(d.length)for(var i=0;i<d.length;i++)h(d[i]);else h(d);return d}})();
+fitText(document.getElementById('title'), 1)
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-7131036-1', '');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>
+

@@ -8,7 +8,6 @@ tags:
 - iOS
 ---
 
-
 > 原文地址：[Automatic Reference Counting](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48)
 > 翻译： [https://www.cnswift.org/](https://www.cnswift.org/)
 
@@ -16,10 +15,9 @@ tags:
 
 但是，少数情况下，`ARC `需要更多关于你和你代码之间的关系信息，以方便帮助你管理内存。
 
-
 > **NOTE**
 > 引用计数仅适用于类的实例。结构和枚举是值类型，而不是引用类型，不会通过引用存储和传递。
-
+<!--more-->
 
 ## ARC工作机制
 

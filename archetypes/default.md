@@ -1,12 +1,7 @@
++++ 
+title = "" 
+description = "" 
+tags = [ ] 
+topics = [ ] 
 +++
-title = ""
-description = ""
-tags = [
-    "go",
-    "development",
-]
-topics = [
-    "Development",
-    "golang",
-]
-+++
+

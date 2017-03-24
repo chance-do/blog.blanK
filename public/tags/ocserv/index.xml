@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ocserv on Blank&#39;s Blog</title>
+    <link>https://mjyi.github.io/tags/ocserv/index.xml</link>
+    <description>Recent content in Ocserv on Blank&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2008 - 2014, blanK; all rights reserved.</copyright>
+    <atom:link href="https://mjyi.github.io/tags/ocserv/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>记OpenConnect VPN server的搭建</title>
+      <link>https://mjyi.github.io/post/1702-ocserv/</link>
+      <pubDate>Wed, 15 Feb 2017 17:15:43 +0000</pubDate>
+      
+      <guid>https://mjyi.github.io/post/1702-ocserv/</guid>
+      <description>&lt;p&gt;iphone 上使用VPN 一直是件让人头疼的事。而&lt;code&gt;shadowsocks&lt;/code&gt;的iOS客户端，并不像对其它系统那么“友好”。&lt;/p&gt;
+
+&lt;p&gt;iOS 系统设置支持&lt;code&gt;IKEv2&lt;/code&gt;，&lt;code&gt;IPSec&lt;/code&gt;，&lt;code&gt;L2TP&lt;/code&gt;。但是用起来很“痛苦”，连接慢，爱断线！&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;OpenConnet Server（ocserv）它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。&lt;/p&gt;
+
+&lt;p&gt;AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;对于个人使用，这个优点就够了！！！&lt;/p&gt;
+
+&lt;p&gt;vps:
+- Ubuntu 14.04 LTS
+- OpenVZ架构
+&lt;/p&gt;
+
+&lt;h2 id=&#34;编译ocserv&#34;&gt;编译ocserv&lt;/h2&gt;
+
+&lt;p&gt;首先，我们先下载&lt;code&gt;ocserv&lt;/code&gt;的最新版本.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;wget ftp://ftp.infradead.org/pub/ocserv/ocserv-0.11.7.tar.xz
+tar xvf ocserv-0.11.7.tar.xz
+cd ocserv-0.11.7
+
+# 添加编译依赖库。
+apt-get install libev-dev  build-essential pkg-config libgnutls28-dev libreadline-dev libseccomp-dev libwrap0-dev libnl-nf-3-dev liblz4-dev
+
+# 编译/安装
+```bash
+./configure
+
+make  
+make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;配置ocserv&#34;&gt;配置ocserv&lt;/h2&gt;
+
+&lt;p&gt;参考&lt;a href=&#34;http://www.infradead.org/ocserv/manual.html&#34;&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;证书&#34;&gt;证书&lt;/h3&gt;
+
+&lt;p&gt;安装证书工具 &lt;code&gt;apt-get install gnutls-bin&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;证书的配置参考&lt;a href=&#34;http://www.infradead.org/ocserv/manual.html&#34;&gt;官方文档&lt;/a&gt;即可&lt;/p&gt;
+
+&lt;p&gt;** 创建CA证书模板 **&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir certificates
+cd certificates
+
+vi ca.tmpl
+cn = &amp;quot;Your CA name&amp;quot; 
+organization = &amp;quot;Your fancy name&amp;quot; 
+serial = 1 
+expiration_days = 3650
+ca 
+signing_key 
+cert_signing_key 
+crl_signing_key
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;** 生成CA密钥 和 证书 **&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;certtool --generate-privkey --outfile ca-key.pem
+certtool --generate-self-signed --load-privkey ca-key.pem --template ca.tmpl --outfile ca-cert.pem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;同样，生成服务器证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi server.tmpl
+cn = &amp;quot;Your hostname or IP&amp;quot; 
+organization = &amp;quot;Your fancy name&amp;quot; 
+expiration_days = 3650
+signing_key 
+encryption_key
+tls_www_server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;生成Server密钥 和 证书&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;certtool --generate-privkey --outfile server-key.pem
+
+certtool --generate-certificate --load-privkey server-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template server.tmpl --outfile server-cert.pem
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;将CA，Server证书与密钥复制到以下文件夹&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cp ca-cert.pem /etc/ssl/private/my-ca-cert.pem
+cp server-cert.pem /etc/ssl/private/my-server-cert.pem
+cp server-key.pem /etc/ssl/private/my-server-key.pem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;下面准备配置文件&#34;&gt;下面准备配置文件&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir /etc/ocserv
+cd ~/ocserv*
+cp doc/sample.config /etc/ocserv/ocserv.conf
+vi /etc/ocserv/ocserv.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置文件可以&lt;a href=&#34;http://www.infradead.org/ocserv/manual.html&#34;&gt;官方文档&lt;/a&gt;来写，不过这里我们重点要确保以下条目正确。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 登陆方式，目前先用密码登录
+auth = &amp;quot;plain[/etc/ocserv/ocpasswd]&amp;quot;
+
+# 允许同时连接的客户端数量
+max-clients = 4
+
+# 限制同一客户端的并行登陆数量
+max-same-clients = 2
+
+# 服务监听的IP（服务器IP，可不设置）
+#listen-host = 1.2.3.4
+
+# 服务监听的TCP/UDP端口（选择你喜欢的数字）
+tcp-port = 9000
+udp-port = 9001
+
+# 自动优化VPN的网络性能
+try-mtu-discovery = true
+
+# 确保服务器正确读取用户证书（后面会用到用户证书）
+cert-user-oid = 2.5.4.3
+
+# 服务器证书与密钥
+ca-cert = /etc/ssl/private/my-ca-cert.pem
+server-cert = /etc/ssl/private/my-server-cert.pem
+server-key = /etc/ssl/private/my-server-key.pem
+
+# 客户端连上vpn后使用的dns
+dns = 8.8.8.8
+dns = 8.8.4.4
+
+# 注释掉所有的route，让服务器成为gateway
+#route = 192.168.1.0/255.255.255.0
+
+# 启用cisco客户端兼容性支持
+cisco-client-compat = true
+
+#据说可以优化速度
+output-buffer = 23000 
+try-mtu-discovery = true 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;修改防火墙&#34;&gt;修改防火墙&lt;/h3&gt;
+
+&lt;p&gt;修改内核设置，使得支持转发，&lt;code&gt;vi /etc/sysctl.conf&lt;/code&gt;,将&lt;code&gt;net.ipv4.ip_forward=0&lt;/code&gt;改为&lt;code&gt;net.ipv4.ip_forward=1&lt;/code&gt;
+保存生效&lt;code&gt;sysctl -p&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;打开OCserv对应的TCP/UDP端口&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iptables -A INPUT -p tcp -m state --state NEW --dport 9000 -j ACCEPT
+iptables -A INPUT -p udp -m state --state NEW --dport 9001 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;开启NAT转发。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o venet0 -j MASQUERADE
+iptables -A FORWARD -s 192.168.1.0/24 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用&lt;code&gt;iptables -t nat -L&lt;/code&gt;来验证转发是否开启成功&lt;/p&gt;
+
+&lt;h3 id=&#34;测试服务器&#34;&gt;测试服务器&lt;/h3&gt;
+
+&lt;p&gt;创建一个帐号&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ocpasswd -c /etc/ocserv/ocpasswd username
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;启动服务&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ocserv -f -d 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;连接手机测试。。。。&lt;/p&gt;
+
+&lt;h3 id=&#34;免密码登录&#34;&gt;免密码登录&lt;/h3&gt;
+
+&lt;p&gt;创建客户端证书，免密码登录。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~/certificates/
+vi user.tmpl
+
+cn = &amp;quot;some random name&amp;quot;
+unit = &amp;quot;some random unit&amp;quot;
+expiration_days = 365
+signing_key
+tls_www_client
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;**生成User密钥 生成User证书 **&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;certtool --generate-privkey --outfile user-key.pem
+
+certtool --generate-certificate --load-privkey user-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template user.tmpl --outfile user-cert.pem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;将证书和密钥转为PKCS12的格式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-certificate user-cert.pem --outfile user.p12 --outder
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;输入证书名字和密码。&lt;/p&gt;
+
+&lt;p&gt;可以使用web服务将&lt;code&gt;user.p12&lt;/code&gt;导入手机。&lt;/p&gt;
+
+&lt;p&gt;我用的是python的一个简单http服务器命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~/targetfolder
+python -m SimpleHTTPServer
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;用&lt;code&gt;Safari&lt;/code&gt;打开下载。&lt;/p&gt;
+
+&lt;p&gt;** 修改认证方式 **&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/ocserv/ocserv.conf
+
+# 改为证书登陆，注释掉原来的登陆模式
+auth = &amp;quot;certificate&amp;quot;
+
+# 证书认证不支持这个选项，注释掉这行
+#listen-clear-file = /var/run/ocserv-conn.socket
+
+# 启用证书验证
+ca-cert = /etc/ssl/private/my-ca-cert.pem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;同时，我们可以制作一个启动脚本。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /etc/init.d
+ln -s /lib/init/upstart-job ocserv
+
+cd /etc/init
+vi  ocserv.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;填入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!upstart
+description &amp;quot;OpenConnect Server&amp;quot;
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+respawn
+respawn limit 20 5
+
+script
+    exec start-stop-daemon --start --pidfile /var/run/ocserv.pid --exec /usr/local/sbin/ocserv -- -f &amp;gt;&amp;gt; /dev/null 2&amp;gt;&amp;amp;1
+end script
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样，我们就可以使用&lt;code&gt;service ocserv start&lt;/code&gt;和&lt;code&gt;service ocserv stop&lt;/code&gt;来控制服务了。&lt;/p&gt;
+
+&lt;p&gt;** 后记：**&lt;/p&gt;
+
+&lt;p&gt;终于能够舒服的看片了！&lt;/p&gt;
+
+&lt;p&gt;iphone 客户端：在&lt;code&gt;APP Store&lt;/code&gt; 搜索&lt;code&gt;AnyConnect&lt;/code&gt;。。
+参考：
+&lt;a href=&#34;http://www.infradead.org/ocserv/manual.html&#34;&gt;官方文档&lt;/a&gt;
+&lt;a href=&#34;https://bitinn.net/11084/&#34;&gt;https://bitinn.net/11084/&lt;/a&gt;
+&lt;a href=&#34;https://github.com/iMeiji/shadowsocks_install/wiki/OpenConnect-VPN-server&#34;&gt;OpenConnect VPN server&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Swift on Blank&#39;s Blog</title>
+    <link>https://mjyi.github.io/tags/swift/index.xml</link>
+    <description>Recent content in Swift on Blank&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2008 - 2014, blanK; all rights reserved.</copyright>
+    <atom:link href="https://mjyi.github.io/tags/swift/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Swift:Automatic Reference Counting in Swift</title>
+      <link>https://mjyi.github.io/post/1612-arc-in-swift/</link>
+      <pubDate>Fri, 30 Dec 2016 10:40:56 +0000</pubDate>
+      
+      <guid>https://mjyi.github.io/post/1612-arc-in-swift/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&#34;https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48&#34;&gt;Automatic Reference Counting&lt;/a&gt;
+翻译： &lt;a href=&#34;https://www.cnswift.org/&#34;&gt;https://www.cnswift.org/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;Swift&lt;/code&gt; 使用自动引用计数*(ARC)*机制来追踪和管理你的APP的内存使用。在大多数情况下，这意味着内存管理在Swift中“正常工作”，不需要自己考虑内存管理。ARC会自动释放类实例所占用的内存。&lt;/p&gt;
+
+&lt;p&gt;但是，少数情况下，&lt;code&gt;ARC&lt;/code&gt;需要更多关于你和你代码之间的关系信息，以方便帮助你管理内存。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+引用计数仅适用于类的实例。结构和枚举是值类型，而不是引用类型，不会通过引用存储和传递。
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;arc工作机制&#34;&gt;ARC工作机制&lt;/h2&gt;
+
+&lt;p&gt;当我们创建一个类的实例时，&lt;code&gt;ARC&lt;/code&gt; 会分类一块内存来存储这个实例的信息。包括实例的内存信息，以及实例所有存储属性值的信息。&lt;/p&gt;
+
+&lt;p&gt;另外，当实例不再需要时，&lt;code&gt;ARC&lt;/code&gt; 会释放实例所占用的内存。这样确保类实例当它不需要时，不会一直占着内存。&lt;/p&gt;
+
+&lt;p&gt;但是，如果&lt;code&gt;ARC&lt;/code&gt;释放了一个正在使用的实例的内存，将无法再访问该实例的属性，或者调用该实例的方法。事实上，如果你试图访问实例，你的应用程序很可能会崩溃。&lt;/p&gt;
+
+&lt;p&gt;为了确保实例在仍然需要时不消失，ARC跟踪有多少属性，常量和变量当前指向每个类实例。只要至少有一个对该实例的活动引用仍然存在，ARC就不会释放实例。&lt;/p&gt;
+
+&lt;p&gt;为了实现这些，无论你将实例分配给属性，常量或变量，它们都会创建该实例的&lt;code&gt;强引用&lt;/code&gt;(strong)。之所以称之为“强”引用，是因为它会将实例保持住，只要强引用还在，实例是不允许被销毁的。&lt;/p&gt;
+
+&lt;h2 id=&#34;arc&#34;&gt;ARC&lt;/h2&gt;
+
+&lt;p&gt;下面的例子展示了自动引用计数的工作机制、&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Person {
+    let name: String
+    init(name: String) {
+        self.name = name
+        print(&amp;quot;\(name) is being initialized&amp;quot;)
+    }
+    deinit {
+        print(&amp;quot;\(name) is being deinitialized&amp;quot;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Person&lt;/code&gt; 类有一个初始化器， 它设定了实例的&lt;code&gt;name&lt;/code&gt; 属性。一个反初始化器，会在类的实例被销毁的时候打印一条信息。&lt;/p&gt;
+
+&lt;p&gt;现在定义三个&lt;code&gt;Person?&lt;/code&gt; 类型的变量，用来按照代码的顺序，为新的&lt;code&gt;Person&lt;/code&gt; 实例设置引用。由于可选类型的变量会被自动初始化为一个&lt;code&gt;nil&lt;/code&gt;值，目前还不会引用到&lt;code&gt;Person&lt;/code&gt; 类的实例。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var reference1: Person?   // nil
+var reference2: Person?	  // nil
+var reference3: Person?   // nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;创建一个新的 Person 实例并且将它赋值&lt;code&gt;reference1&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;reference1 = Person(name: &amp;quot;John Appleseed&amp;quot;)		// Person
+// print &amp;quot;John Appleseed is being initialized&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;类实例之间的循环强引用&#34;&gt;类实例之间的循环强引用&lt;/h2&gt;
+
+&lt;p&gt;如果两个类实例彼此持有对方的强引用，因而每个实例都让对方一直存在，就会发生这种情况。这就是所谓的&lt;code&gt;循环强引用&lt;/code&gt;。(Strong reference Cycles Between Class Instances)&lt;/p&gt;
+
+&lt;p&gt;解决循环强引用问题，可以通过定义类之间的关系为弱引用(&lt;code&gt;weak&lt;/code&gt;)或无主引用(&lt;code&gt;unowned&lt;/code&gt;)来代替强引用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Person {
+    let name: String
+    init(name: String) { self.name = name }
+    var apartment: Apartment?
+    deinit { print(&amp;quot;\(name) is being deinitialized&amp;quot;) }
+}
+ 
+class Apartment {
+    let unit: String
+    init(unit: String) { self.unit = unit }
+    var tenant: Person?
+    deinit { print(&amp;quot;Apartment \(unit) is being deinitialized&amp;quot;) }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这两个类都定义了反初始化器，用以在类实例被反初始化时输出信息.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var john: Person?			// nil
+var unit4A: Apartment?		// nil
+
+john = Person(name: &amp;quot;John Appleseed&amp;quot;)	// Person
+unit4A = Apartment(unit: &amp;quot;4A&amp;quot;)			// Apartment
+
+john!.apartment = unit4A
+unit4A!.tenant = john
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;感叹号( ! )是用来展开和访问可选变量 john 和 unit4A 里的实例的，所以这些实例的属性可以设置。&lt;/p&gt;
+
+&lt;p&gt;这两个实例关联后会产生一个循环强引用。 &lt;code&gt;Person&lt;/code&gt; 实例现在有了一个指向 &lt;code&gt;Apartment&lt;/code&gt; 实例的强引用，而 &lt;code&gt;Apartment&lt;/code&gt; 实例也有了一个指向 &lt;code&gt;Person&lt;/code&gt; 实例的强引用。因此，当你断开 &lt;code&gt;john&lt;/code&gt; 和 &lt;code&gt;unit4A&lt;/code&gt;变量所持有的强引用时，引用计数并不会降零，实例也不会被 ARC 释放：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;john = nil
+unit4A = nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意，当你把这两个变量设为 &lt;code&gt;nil&lt;/code&gt; 时，没有任何一个反初始化器被调用。循环强引用会一直阻止 &lt;code&gt;Person&lt;/code&gt; 和 &lt;code&gt;Apartment&lt;/code&gt; 类实例的释放，这就在你的应用程序中造成了内存泄漏。&lt;/p&gt;
+
+&lt;h2 id=&#34;解决实例之间的循环强引用&#34;&gt;解决实例之间的循环强引用&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Swift&lt;/code&gt; 提供了两种办法用来解决你在使用类的属性时所遇到的循环强引用问题：弱引用（ &lt;code&gt;weak reference&lt;/code&gt; ）和无主引用（ &lt;code&gt;unowned reference&lt;/code&gt; )。&lt;/p&gt;
+
+&lt;h4 id=&#34;弱引用-weak&#34;&gt;弱引用 weak&lt;/h4&gt;
+
+&lt;p&gt;弱引用不会对其引用的实例保持强引用，因而不会阻止&lt;code&gt;ARC&lt;/code&gt; 释放被引用的实例。这个特性阻止了引用变为循环强引用。声明属性或者变量时，在前面加上&lt;code&gt;weak&lt;/code&gt;关键字表明这是一个弱引用。&lt;/p&gt;
+
+&lt;p&gt;由于弱引用不会强保持对实例的引用，所以说实例被释放了弱引用仍旧引用着这个实例也是有可能的。因此，&lt;code&gt;ARC&lt;/code&gt; 会在被引用的实例被释放是自动地设置弱引用为 &lt;code&gt;nil&lt;/code&gt; 。由于弱引用需要允许它们的值为 &lt;code&gt;nil&lt;/code&gt; ，它们一定得是可选类型。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+在&lt;code&gt;ARC&lt;/code&gt;给弱引用设置&lt;code&gt;nil&lt;/code&gt;时不会调用属性观察者。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;下面的例子跟上面 &lt;code&gt;Person&lt;/code&gt; 和 &lt;code&gt;Apartment&lt;/code&gt; 的例子一致，但是有一个重要的区别。这次，&lt;code&gt;Apartment&lt;/code&gt; 的 &lt;code&gt;tenant&lt;/code&gt; 属性被声明为弱引用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Person {
+    let name: String
+    init(name: String) {
+        self.name = name
+        print(&amp;quot;\(name) is being initialized&amp;quot;)
+    }
+    var apartment: Apartment?
+    deinit {
+        print(&amp;quot;\(name) is being deinitialized&amp;quot;)
+    }
+}
+
+class Apartment {
+    let unit: String
+    init(unit: String) {
+        self.unit = unit
+    }
+    weak var tenant: Person?
+    deinit {
+        print(&amp;quot;Apartment \(unit) is being deinitialized&amp;quot;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;将两个变量关联起来&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var john: Person?
+var unit4A: Apartment?
+ 
+john = Person(name: &amp;quot;John Appleseed&amp;quot;)
+unit4A = Apartment(unit: &amp;quot;4A&amp;quot;)
+ 
+john!.apartment = unit4A
+unit4A!.tenant = john
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Person&lt;/code&gt;实例保持对&lt;code&gt;Apartment&lt;/code&gt;实例的强引用，但是&lt;code&gt;Apartment&lt;/code&gt;实例现在对&lt;code&gt;Person&lt;/code&gt;实例是弱引用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;unit4A = nil
+// 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;此时，&lt;code&gt;Person&lt;/code&gt;实例保持对&lt;code&gt;Apartment&lt;/code&gt;实例的强引用，所以 &lt;code&gt;Apartment&lt;/code&gt;实例 并没有被释放掉。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;john = nil
+
+//	John Appleseed is being deinitialized
+//	Apartment 4A is being deinitialized
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;john&lt;/code&gt;设置nil 后，没有对&lt;code&gt;Apartment&lt;/code&gt;实例的引用，所以 &lt;code&gt;Apartment&lt;/code&gt; 实例也被释放掉了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+在使用垃圾回收机制的系统中，由于没有强引用的对象会在内存有压力时触发垃圾回收而被释放，弱指针有时用来实现简单的缓存机制。总之，对于 ARC 来说，一旦最后的强引用被移除，值就会被释放，这样的话弱引用就不再适合这类用法了。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;无主引用&#34;&gt;无主引用&lt;/h4&gt;
+
+&lt;p&gt;和&lt;code&gt;弱引用&lt;/code&gt;类似，&lt;code&gt;无主引用&lt;/code&gt;不会牢牢保持住引用的实例。但是不像&lt;code&gt;弱引用&lt;/code&gt;，总之，&lt;code&gt;无主引用&lt;/code&gt;假定是永远有值的。因此，&lt;code&gt;无主引用&lt;/code&gt;总是被定义为*非可选类型*。你可以在声明属性或者变量时，在前面加上关键字 &lt;code&gt;unowned&lt;/code&gt; 表示这是一个&lt;code&gt;无主引用&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;由于无主引用是&lt;code&gt;非可选类型&lt;/code&gt;，你不需要在使用它的时候将它展开。无主引用总是可以直接访问。不过 &lt;code&gt;ARC&lt;/code&gt; 无法在实例被释放后将无主引用设为 &lt;code&gt;nil&lt;/code&gt; ，因为非可选类型的变量不允许被赋值为 &lt;code&gt;nil&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+如果你试图在实例的被释放后访问无主引用，那么你将触发运行时错误。只有在你确保引用会一直引用实例的时候才使用无主引用。
+还要注意的是，如果你试图访问引用的实例已经被释放了的无主引用，Swift 会确保程序直接崩溃。你不会因此而遭遇无法预期的行为。所以你应当避免这样的事情发生。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;下面看一个例子&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Customer {
+    let name: String
+    var card: CreditCard?
+    init(name: String) {
+        self.name = name
+    }
+    deinit {
+        print(&amp;quot;\(name) is being deinitialized&amp;quot;)
+    }
+}
+
+class CreditCard {
+    let number: UInt64
+    unowned let customer: Customer
+    init(number: UInt64, customer: Customer) {
+        self.number = number
+        self.customer = customer
+    }
+    deinit {
+        print(&amp;quot;Card # \(number) is being deinitialized&amp;quot;)
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Customer&lt;/code&gt;和&lt;code&gt;CreditCard&lt;/code&gt; 类，模拟了银行客户和客户的信用卡。这两个类中，每一个都将另外一个类的实例作为自身的属性。这种关系可能会造成循环强引用。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Customer&lt;/code&gt; 和 &lt;code&gt;CreditCard&lt;/code&gt; 之间的关系与前面弱引用例子中 &lt;code&gt;Apartment&lt;/code&gt; 和 &lt;code&gt;Person&lt;/code&gt; 的关系略微不同。在这个数据模型中，一个客户可能有或者没有信用卡，但是一张信用卡总是关联着一个客户。为了表示这种关系， &lt;code&gt;Customer&lt;/code&gt; 类有一个可选类型的 &lt;code&gt;card&lt;/code&gt; 属性，但是 &lt;code&gt;CreditCard&lt;/code&gt; 类有一个非可选类型的 customer 属性。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var john: Customer?    //nil
+
+john = Customer(name: &amp;quot;John Appleseed&amp;quot;)
+john!.card = CreditCard(number: 1234_5678_9012_3456， customer: john!)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;创建一个 &lt;code&gt;Customer&lt;/code&gt; 实例，用它初始化和分配一个新的 &lt;code&gt;CreditCard&lt;/code&gt;实例作为 &lt;code&gt;customer&lt;/code&gt; 的 &lt;code&gt;card&lt;/code&gt; 属性.&lt;/p&gt;
+
+&lt;p&gt;现在 &lt;code&gt;Customer&lt;/code&gt; 实例对 &lt;code&gt;CreditCard&lt;/code&gt; 实例有一个强引用，并且 &lt;code&gt;CreditCard&lt;/code&gt; 实例对 &lt;code&gt;Customer&lt;/code&gt; 实例有一个无主引用。&lt;/p&gt;
+
+&lt;p&gt;由于 &lt;code&gt;Customer&lt;/code&gt; 的无主引用，当你断开 &lt;code&gt;john&lt;/code&gt; 变量持有的强引用时，那么就再也没有指向 &lt;code&gt;Customer&lt;/code&gt; 实例的强引用了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;john = nil
+// prints &amp;quot;John Appleseed is being deinitialized&amp;quot;
+// prints &amp;quot;Card #1234567890123456 is being deinitialized&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+上边的例子展示了如何使用安全无主引用。Swift 还为你需要关闭运行时安全检查的情况提供了不安全无主引用——举例来说，性能优化的时候。对于所有的不安全操作，你要自己负责检查代码安全性。
+使用 &lt;code&gt;unowned(unsafe)&lt;/code&gt; 来明确使用了一个不安全无主引用。如果你在实例的引用被释放后访问这个不安全无主引用，你的程序就会尝试访问这个实例曾今存在过的内存地址，这就是不安全操作。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;无主引用和隐式展开的可选属性&#34;&gt;无主引用和隐式展开的可选属性&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Person&lt;/code&gt;和 &lt;code&gt;Apartment&lt;/code&gt; 的例子展示了两个属性值都允许为&lt;code&gt;nil&lt;/code&gt;，并会潜在产生循环强引用。这种场景最适合用弱引用来解决。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Customer&lt;/code&gt;和 &lt;code&gt;CreditCard&lt;/code&gt;的例子战士胃一个属性值允许为&lt;code&gt;nil&lt;/code&gt;，另一个不允许为&lt;code&gt;nil&lt;/code&gt;，这也有可能导致循环强引用。这种场景最好使用&lt;code&gt;无主引用&lt;/code&gt;来解决。&lt;/p&gt;
+
+&lt;p&gt;还有第三中场景，两个属性都必须有值，并且初始化完成后永远不会为&lt;code&gt;nil&lt;/code&gt;。在这种场景中，需要一个类使用&lt;code&gt;无主属性&lt;/code&gt;，而另一个类使用隐式展开的&lt;code&gt;可选属性&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;下面的例子定义了两个类，&lt;code&gt;Country&lt;/code&gt;和&lt;code&gt;City&lt;/code&gt;，每个类将另外一个类的实例保存为属性。在这个数据模型中，每个国家必须有首都，每个城市必须属于一个国家。为了实现这种关系， &lt;code&gt;Country&lt;/code&gt; 类拥有一个 &lt;code&gt;capitalCity&lt;/code&gt; 属性，而 &lt;code&gt;City&lt;/code&gt; 类有一个 &lt;code&gt;country&lt;/code&gt; 属性：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Country {
+    let name: String
+    var capitalCity: City!
+    init(name: String, capitalName: String) {
+        self.name = name
+        self.capitalCity = City(name: capitalName, country: self)
+    }
+}
+
+
+class City {
+    let name: String
+    unowned let country: Country
+    init(name: String, country: Country) {
+        self.name = name
+        self.country = country
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了建立两个类的依赖关系，&lt;code&gt;City&lt;/code&gt;的初始化器 接收一个&lt;code&gt;Country&lt;/code&gt;实例，并且将实例保存 到 &lt;code&gt;country&lt;/code&gt;属性。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Country&lt;/code&gt;的初始化器调用了&lt;code&gt;City&lt;/code&gt;的初始化器。总之，如同在两段式初始化中描述的那样，只有&lt;code&gt;Country&lt;/code&gt;的实例完全初始化完成后，&lt;code&gt;Country&lt;/code&gt;的初始化器才能把&lt;code&gt;self&lt;/code&gt;传给&lt;code&gt;City&lt;/code&gt;的初始化器。&lt;/p&gt;
+
+&lt;p&gt;为了满足这种需求，通过在类型结尾处加上感叹号（&lt;code&gt;City!&lt;/code&gt; ）的方式，以声明 &lt;code&gt;Country&lt;/code&gt; 的 &lt;code&gt;capitalCity&lt;/code&gt; 属性为一个隐式展开的可选属性。如同在隐式展开可选项中描述的那样，这意味着像其他可选项一样， &lt;code&gt;capitalCity&lt;/code&gt; 属性有一个默认值 &lt;code&gt;nil&lt;/code&gt; ，但是不需要展开它的值就能访问它。&lt;/p&gt;
+
+&lt;p&gt;由于 &lt;code&gt;capitalCity&lt;/code&gt; 默认值为 &lt;code&gt;nil&lt;/code&gt; ，一旦 &lt;code&gt;Country&lt;/code&gt; 的实例在初始化器中给 &lt;code&gt;name&lt;/code&gt; 属性赋值后，整个初始化过程就完成了。这意味着一旦 &lt;code&gt;name&lt;/code&gt; 属性被赋值后， &lt;code&gt;Country&lt;/code&gt; 的初始化器就能引用并传递隐式的 &lt;code&gt;self&lt;/code&gt; 。 &lt;code&gt;Country&lt;/code&gt; 的初始化器在赋值 &lt;code&gt;capitalCity&lt;/code&gt; 时，就能将 &lt;code&gt;self&lt;/code&gt; 作为参数传递给 &lt;code&gt;City&lt;/code&gt; 的初始化器。&lt;/p&gt;
+
+&lt;p&gt;以上的意义在于你可以通过一条语句同时创建&lt;code&gt;Country&lt;/code&gt;和&lt;code&gt;City&lt;/code&gt;的实例，而不产生循环引用。并且 &lt;code&gt;capitalCity&lt;/code&gt; 的属性能被直接访问，而不需要通过感叹号来展开它的可选值：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var country = Country(name: &amp;quot;Canada&amp;quot;, capitalName: &amp;quot;Ottawa&amp;quot;)
+print(&amp;quot;\(country.name)&#39;s capital city is called \(country.capitalCity.name)&amp;quot;)
+// prints &amp;quot;Canada&#39;s capital city is called Ottawa&amp;quot;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;闭包的循环强引用&#34;&gt;闭包的循环强引用&lt;/h2&gt;
+
+&lt;p&gt;循环强引用还会出现在你把一个闭包分配给类实例属性的时候，并且这个闭包中又捕获了这个实例。
+捕获可能发生于这个闭包函数体中访问了实例的某个属性，比如&lt;code&gt;self.someProperty&lt;/code&gt;，或者这个闭包调用了一个实例的方法，例如&lt;code&gt;self.someMethod()&lt;/code&gt;. 这两种情况都导致了闭包“捕获”了&lt;code&gt;self&lt;/code&gt;，从而产生了循环强引用。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;循环强引用&lt;/code&gt;的产生，是因为闭包和类相似，都是&lt;code&gt;引用类型&lt;/code&gt;。当你把闭包赋值给了一个属性，你实际上是把一个引用赋值给了这个闭包。实质上，这跟之前上面的问题是一样的——两个强引用让彼此一直有效。总之，和两个类实例不同，这次一个是类实例和一个闭包互相引用。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Swift&lt;/code&gt; 提供了一种优雅的方法来解决这个问题，称之为闭包捕获列表（ &lt;code&gt;closuer capture list&lt;/code&gt;）。不过，在学习如何用闭包捕获列表打破循环强引用之前，我们还是先来了解一下这个循环强引用是如何产生的，这对我们很有帮助。&lt;/p&gt;
+
+&lt;p&gt;下面的例子为你展示了当一个闭包引用了&lt;code&gt;self&lt;/code&gt;后是如何产生一个循环强引用的。例子中定义了一个叫 &lt;code&gt;HTMLElement&lt;/code&gt; 的类，用一种简单的模型表示 &lt;code&gt;HTML&lt;/code&gt; 中的一个单独的元素：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;class HTMLElement {
+    let name: String
+    let text: String?
+    lazy var asHTML: (Void) -&amp;gt; String = {
+        if let text = self.text {
+            return &amp;quot;&amp;lt;\(self.name)&amp;gt;\(text)&amp;lt;/\(self.name)&amp;gt;&amp;quot;
+        } else {
+            return &amp;quot;&amp;lt;\(self.name) /&amp;gt;&amp;quot;
+        }
+    }
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+    
+    deinit {
+        print(&amp;quot;\(name) is being deinitialized&amp;quot;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;默认情况下，闭包赋值给了 &lt;code&gt;asHTML&lt;/code&gt; 属性，这个闭包返回一个代表&lt;code&gt;HTML&lt;/code&gt;标签的字符串。如果 &lt;code&gt;text&lt;/code&gt; 值存在，该标签就包含可选值 &lt;code&gt;text&lt;/code&gt; ；如果 &lt;code&gt;text&lt;/code&gt; 不存在，该标签就不包含文本。对于段落元素，根据 &lt;code&gt;text&lt;/code&gt; 是 &amp;ldquo;some text&amp;rdquo; 还是 &lt;code&gt;nil&lt;/code&gt; ，闭包会返回 &lt;code&gt;&amp;lt;p&amp;gt;some text&amp;lt;/p&amp;gt;&lt;/code&gt; 或者 &lt;code&gt;&amp;lt;p /&amp;gt;&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;p&gt;可以像实例方法那样去命名、使用 &lt;code&gt;asHTML&lt;/code&gt; 属性。总之，由于 &lt;code&gt;asHTML&lt;/code&gt; 是闭包而不是实例方法，如果你想改变特定元素的 &lt;code&gt;HTML&lt;/code&gt;处理的话，可以用自定义的闭包来取代默认值。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;let heading = HTMLElement(name: &amp;quot;h1&amp;quot;)
+let defaultText = &amp;quot;some default text&amp;quot;
+heading.asHTML = {
+    return &amp;quot;&amp;lt;\(heading.name)&amp;gt;\(heading.text ?? defaultText)&amp;lt;/\(heading.name)&amp;gt;&amp;quot;
+}
+
+print(heading.asHTML())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+&lt;code&gt;asHTML&lt;/code&gt; 声明为&lt;code&gt;lazy&lt;/code&gt;属性，因为只有当元素确实需要处理为&lt;code&gt;HTML&lt;/code&gt;输出的字符串时，才需要使用 &lt;code&gt;asHTML&lt;/code&gt;。
+实际上 asHTML 是延迟加载属性意味着你在默认的闭包中可以使用 &lt;code&gt;self&lt;/code&gt; ，因为只有当初始化完成以及 self 确实存在后，才能访问延迟加载属性。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;HTMLElement&lt;/code&gt; 类只提供一个初始化器，通过 name 和 text （如果有的话）参数来初始化一个元素。该类也定义了一个初始化器，当 &lt;code&gt;HTMLElement&lt;/code&gt; 实例被释放时打印一条消息。&lt;/p&gt;
+
+&lt;p&gt;实例的 &lt;code&gt;asHTML&lt;/code&gt; 属性持有闭包的强引用。但是，闭包在其闭包体内使用了 &lt;code&gt;self&lt;/code&gt;（引用了 &lt;code&gt;self.name&lt;/code&gt; 和 &lt;code&gt;self.text&lt;/code&gt; ），因此闭包捕获了 &lt;code&gt;self&lt;/code&gt; ，这意味着闭包又反过来持有了 &lt;code&gt;HTMLElement&lt;/code&gt; 实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考值捕获）。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+尽管闭包多次引用&lt;code&gt;HTMLElement&lt;/code&gt;,它只捕获&lt;code&gt;HTMLElement&lt;/code&gt;实例的一个强引用。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;如果设置 paragraph 变量为 nil ，打破它持有的 HTMLElement 实例的强引用， HTMLElement 实例和它的闭包都不会被释放，也是因为循环强引用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;paragraph = nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;解决闭包的循环强引用&#34;&gt;解决闭包的循环强引用&lt;/h2&gt;
+
+&lt;p&gt;你可以通过定义捕获列表作为闭包的定义来解决在闭包和类实例之间的循环强引用。捕获列表定义了当在闭包体里捕获一个或多个引用类型的规则。正如在两个类实例之间的循环强引用，声明每个捕获的引用为引用或无主引用而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+&lt;code&gt;Swift&lt;/code&gt; 要求你在闭包中引用&lt;code&gt;self&lt;/code&gt;成员时使用 &lt;code&gt;self.someProperty&lt;/code&gt; 或者&lt;code&gt;self.someMethod&lt;/code&gt; （而不只是 &lt;code&gt;someProperty&lt;/code&gt; 或 &lt;code&gt;someMethod&lt;/code&gt; ）。这有助于提醒你可能会一不小心就捕获了 &lt;code&gt;self&lt;/code&gt; 。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;lazy var someClosure: (Int, String) -&amp;gt; String = {
+    [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -&amp;gt; String in
+    // closure body goes here
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果闭包没有指明形式参数列表或者返回类型，是因为它们会通过上下文推断，那么就把捕获列表放在关键字 in 前边，闭包最开始的地方：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;lazy var someClosure: Void -&amp;gt; String = {
+    [unowned self, weak delegate = self.delegate!] in
+    // closure body goes here
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;弱引用和无主引用&#34;&gt;弱引用和无主引用&lt;/h2&gt;
+
+&lt;p&gt;在闭包和捕获的实例总是互相引用并且总是同时释放时，将闭包内的捕获定义为无主引用。&lt;/p&gt;
+
+&lt;p&gt;相反，在被捕获的引用可能会变为 nil 时，定义一个弱引用的捕获。弱引用总是可选项，当实例的引用释放时会自动变为 nil 。这使我们可以在闭包体内检查它们是否存在。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;
+如果被捕获的引用永远不会变为&lt;code&gt;nil&lt;/code&gt; ，应该用无主引用而不是弱引用。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;前面的 &lt;code&gt;HTMLElement&lt;/code&gt;例子中，无主引用是正确的解决循环强引用的方法。这样编写 &lt;code&gt;HTMLElement&lt;/code&gt; 类来避免循环强引用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;class HTMLElement {
+    
+    let name: String
+    let text: String?
+    
+    lazy var asHTML: Void -&amp;gt; String = {
+        [unowned self] in
+        if let text = self.text {
+            return &amp;quot;&amp;lt;\(self.name)&amp;gt;\(text)&amp;lt;/\(self.name)&amp;gt;&amp;quot;
+        } else {
+            return &amp;quot;&amp;lt;\(self.name) /&amp;gt;&amp;quot;
+        }
+    }
+    
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+    
+    deinit {
+        print(&amp;quot;\(name) is being deinitialized&amp;quot;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面的 &lt;code&gt;HTMLElement&lt;/code&gt; 实现和之前的实现一致，除了在&lt;code&gt;asHTML&lt;/code&gt; 闭包中多了一个捕获列表。这里，捕获列表是 &lt;code&gt;[unowned self]&lt;/code&gt; ，表示“用无主引用而不是强引用来捕获 &lt;code&gt;self&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;var paragraph: HTMLElement? = HTMLElement(name: &amp;quot;p&amp;quot;, text: &amp;quot;hello, world&amp;quot;)
+print(paragraph!.asHTML())
+// prints &amp;quot;&amp;lt;p&amp;gt;hello, world&amp;lt;/p&amp;gt;&amp;quot;
+
+paragraph = nil
+// prints &amp;quot;p is being deinitialized&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;end!!!&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

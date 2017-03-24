@@ -21,7 +21,7 @@ thumbnail:
 注册通知在`- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions NS_AVAILABLE_IOS(3_0);` 方法里。
 
 `iOS 10`使用`- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;` 方法来注册通知。
-
+<!--more-->
 导入 `#import <UserNotifications/UserNotifications.h>`
 
 ```obj-c

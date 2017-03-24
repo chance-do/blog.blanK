@@ -24,11 +24,12 @@ iOS 系统设置支持`IKEv2`，`IPSec`，`L2TP`。但是用起来很“痛苦�
 vps:
 - Ubuntu 14.04 LTS
 - OpenVZ架构
-
+<!--more-->
 ## 编译ocserv
 
 首先，我们先下载`ocserv`的最新版本.
-```
+
+```bash
 wget ftp://ftp.infradead.org/pub/ocserv/ocserv-0.11.7.tar.xz
 tar xvf ocserv-0.11.7.tar.xz
 cd ocserv-0.11.7
@@ -37,6 +38,7 @@ cd ocserv-0.11.7
 apt-get install libev-dev  build-essential pkg-config libgnutls28-dev libreadline-dev libseccomp-dev libwrap0-dev libnl-nf-3-dev liblz4-dev
 
 # 编译/安装
+```bash
 ./configure
 
 make  

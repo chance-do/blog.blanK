@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="keywords" content="Hexo, ">
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+    <base href="https://mjyi.github.io/">
+    <title> 使用hexo写作 - blanK</title>
+    <link rel="canonical" href="https://mjyi.github.io/post/1612-hexo/">
+    
+
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/static/css/style.css">
+
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+</head>
+
+<body lang="en" itemscope itemtype="http://schema.org/Article">
+<header id="header">
+    
+      
+    
+    
+	<nav id="nav">
+	<div id="title"><a href="/">blanK's Blog</a></div>
+	</nav>
+    <nav id="nav">
+    <ul id="mainnav">
+    <li><a href="/">
+            <span class="icon"><i aria-hidden="true" class="icon-home"></i></span>
+            <span>首页</span>
+        </a>
+    </li>
+    <li><a href="/post/">
+            <span class="icon"> <i aria-hidden="true" class="icon-quill"></i></span>
+            <span>技术</span>
+        </a>
+    </li>
+    <li><a href="/daily/">
+            <span class="icon"> <i aria-hidden="true" class="icon-pencil"></i></span>
+            <span>日常</span>
+         </a>
+    </li>
+    <li><a href="/about">
+            <span class="icon"> <i aria-hidden="true" class="icon-info"></i></span>
+            <span>关于</span>
+        </a>
+    </li>
+</ul>
+
+    <ul id="social">
+    
+    <li id="follow">
+        
+        <span class="title"> links </span>
+        <div class="dropdown follow">
+            <ul class="social">
+                <li><a href="https://github.com/mjyi" target="_blank" title="Github" class="github">Github</a></li>
+                <li><a href="https://gohugo.io/" target="_blank" title="Hugo" class="twitter">Hugo</a></li>
+                <li><a href="" target="-_blank" title="Weibo" class="googleplus">Weibo</a></li>
+                <li><a href="mailto:huy948946@gmail.com" target="_blank" title="E-mail" class="facebook">E-mail</a></li>
+                <li><a href="" target="_blank" title="RSS" class="rss">RSS</a></li>
+                
+            </ul>
+            
+            <span class="icon icon-rocket"> </span> <span class="subcount"></span> </div>
+        </div>
+    </li>
+</ul>
+
+    </nav>
+</header>
+
+
+
+<section id="main">
+  <h1 itemprop="name" id="title">使用hexo写作</h1>
+  <div>
+        <article itemprop="articleBody" id="content">
+           <h3 id="新建文章">新建文章</h3>
+
+<pre><code>$ hexo new [layout] &lt;title&gt;
+</code></pre>
+
+<h3 id="布局-layout">布局（Layout）</h3>
+
+<p><a href="https://hexo.io/zh-cn/">Hexo</a> 的三种默认布局：<code>post</code>、<code>page</code>、<code>draft</code>, 可以通过 <code>_config.yml</code>中的<code>default_layout</code> 来指定默认布局。它们分别对应不同的路径，如果自定义了布局，将与<code>post</code>相同， 存储在 <code>source/_posts</code> 文件夹。
+</p>
+
+<table>
+<thead>
+<tr>
+<th>布局</th>
+<th>路径</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>post</td>
+<td>source/_posts</td>
+</tr>
+
+<tr>
+<td>page</td>
+<td>source</td>
+</tr>
+
+<tr>
+<td>draft</td>
+<td>source/_drafts</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="添加分类目录">添加分类目录</h3>
+
+<pre><code>hexo new page &quot;categories&quot;
+</code></pre>
+
+<p>这时会在<code>source</code>下生成目录<code>categories</code>，里面有个<code>index.md</code>文件</p>
+
+<p>编辑index.md，设置<code>type</code> 值为 <code>categories</code></p>
+
+<pre><code>title: categories
+date: 2016-12-09 15:59:21
+type: &quot;categories&quot;
+comments: false
+
+</code></pre>
+
+<p>这样页面就会显示所有的分类了。</p>
+
+<h3 id="添加-tags-页面">添加 tags 页面</h3>
+
+<p><code>tags</code>同<code>categories</code> 设置, 将<code>type</code> 改为<code>tags</code>即可。</p>
+
+<h3 id="草稿">草稿</h3>
+
+<p>新建的文章默认使用 post 布局，如果不想立即发布文章可以先存草稿，这时候文件将会被保存在 <code>source/_drafts</code>中，</p>
+
+<pre><code>hexo new draft &quot;paper&quot;  	 
+hexo publish post &quot;paper&quot;   //文章发布到 source/_posts
+
+</code></pre>
+
+<h3 id="front-matter">Front - matter</h3>
+
+<p>Front-matter 是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量.</p>
+
+<pre><code>---
+title: 使用hexo写作
+date: 2016-12-09 16:23:11
+categories: 
+- Hexo
+tags:
+- Hexo
+---
+</code></pre>
+
+<p>预定参数如下：</p>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>layout</td>
+<td>布局</td>
+<td></td>
+</tr>
+
+<tr>
+<td>title</td>
+<td>标题</td>
+<td></td>
+</tr>
+
+<tr>
+<td>date</td>
+<td>建立日期</td>
+<td>文件建立日期</td>
+</tr>
+
+<tr>
+<td>updated</td>
+<td>更新日期</td>
+<td>文件更新日期</td>
+</tr>
+
+<tr>
+<td>comments</td>
+<td>开启文章的评论功能</td>
+<td>true</td>
+</tr>
+
+<tr>
+<td>tags</td>
+<td>标签（不适用于分页）</td>
+<td></td>
+</tr>
+
+<tr>
+<td>categories</td>
+<td>分类（不适用于分页）</td>
+<td></td>
+</tr>
+
+<tr>
+<td>permalink</td>
+<td>覆盖文章网址</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>更多命令语法参考<a href="https://hexo.io/zh-cn/docs/">Hexo 文档</a>.</p>
+</blockquote>
+        </article>
+  </div>
+</section>
+
+
+
+<aside id="meta">
+
+    <div>
+        <section id="datecount">
+          <h4 id="date"> Fri Dec 2, 2016 </h4>
+          <h5 id="wc"> 200 Words </h5>
+          <h5 id="readtime"> Read in about 1 Min </h5>
+        </section>
+        <ul id="categories">
+          
+        </ul>
+        <ul id="tags">
+          
+            <li> <a href="https://mjyi.github.io//tags/hexo">Hexo</a> </li>
+          
+        </ul>
+    </div>
+
+    <div>
+        <section id="prev">
+            &nbsp;<a class="previous" href="https://mjyi.github.io/post/1612-hexo-tag/"><i class="icon-arrow-left"></i> Hexo常用的内置标签记录</a><br>
+        </section><section id="next">
+            &nbsp;<a class="next" href="https://mjyi.github.io/daily/1611-start/">开始 <i class="icon-arrow-right"></i></a>
+        </section>
+    </div>
+
+
+
+</aside>
+
+<meta itemprop="wordCount" content="109">
+<meta itemprop="datePublished" content="2016-12-02">
+<meta itemprop="url" content="https://mjyi.github.io/post/1612-hexo/">
+
+
+<aside id=comments>
+    <div><h2> Comments </h2></div>
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mjyi-io';
+    var disqus_identifier = 'https:\/\/mjyi.github.io\/post\/1612-hexo\/';
+    var disqus_title = '使用hexo写作';
+    var disqus_url = 'https:\/\/mjyi.github.io\/post\/1612-hexo\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</aside>
+
+<footer>
+  <div>
+    <p>
+    &copy; 2015-17 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">blanK.</span></span>
+    Powered by <a href="http://gohugo.io">Hugo</a>.
+    </p>
+  </div>
+</footer>
+<script type="text/javascript">
+(function(){var j=function(a,b){return window.getComputedStyle?getComputedStyle(a).getPropertyValue(b):a.currentStyle[b]};var k=function(a,b,c){if(a.addEventListener)a.addEventListener(b,c,false);else a.attachEvent('on'+b,c)};var l=function(a,b){for(key in b)if(b.hasOwnProperty(key))a[key]=b[key];return a};window.fitText=function(d,e,f){var g=l({'minFontSize':-1/0,'maxFontSize':1/0},f);var h=function(a){var b=e||1;var c=function(){a.style.fontSize=Math.max(Math.min(a.clientWidth/(b*10),parseFloat(g.maxFontSize)),parseFloat(g.minFontSize))+'px'};c();k(window,'resize',c)};if(d.length)for(var i=0;i<d.length;i++)h(d[i]);else h(d);return d}})();
+fitText(document.getElementById('title'), 1)
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-7131036-1', '');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>
+

@@ -17,7 +17,7 @@ tags:
 我的`VPS`已经安装好了`Ubuntu 14.04 x86 `系统，内存`512MB`尚可。
 
 下面来安装[shadowsocks](https://github.com/shadowsocks/shadowsocks/tree/master)
-
+<!--more-->
 通过`pip`安装`pyhton`
 ```
 apt-get install python-pip

@@ -1,17 +1,14 @@
-baseURL = "http://example.org/"
+baseurl = "https://mjyi.github.io/"
+title = "Blank's Blog"
 languageCode = "en-us"
-title = "My New Hugo Site"
+disqusShortname = "mjyi-io"
+copyright = "Copyright (c) 2008 - 2014, blanK; all rights reserved."
+MetaDataFormat = "yaml"
 
 [author]
-    name = "Blank"
+    name = "blanK"
 
-[[menu.main]]
-  name = "Home"
-  weight = 1
-  identifier = "home"
-  url = "/"
-[[menu.main]]
-  name = "Posts"
-  weight = 2
-  identifier = "post"
-  url = "/post/"
+[indexes]
+    tag = "tags"
+    topic = "topics"
+

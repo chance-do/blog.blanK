@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://mjyi.github.io/about/</loc>
+    <lastmod>2017-03-22T09:42:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1703-vim/</loc>
+    <lastmod>2017-03-12T17:51:07+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1702-ocserv/</loc>
+    <lastmod>2017-02-15T17:15:43+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1702-shadowsocks/</loc>
+    <lastmod>2017-02-14T12:33:16+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1701-gcd/</loc>
+    <lastmod>2017-01-17T14:26:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1612-arc-in-swift/</loc>
+    <lastmod>2016-12-30T10:40:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1612-remotenotification/</loc>
+    <lastmod>2016-12-23T16:38:19+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1612-hexo-tag/</loc>
+    <lastmod>2016-12-15T15:58:42+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/1612-hexo/</loc>
+    <lastmod>2016-12-02T16:23:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/daily/1611-start/</loc>
+    <lastmod>2016-11-11T11:35:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/</loc>
+    <lastmod>2017-03-22T09:42:17+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/daily/</loc>
+    <lastmod>2016-11-11T11:35:31+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/gcd/</loc>
+    <lastmod>2017-01-17T14:26:31+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/hexo/</loc>
+    <lastmod>2016-12-15T15:58:42+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/ios/</loc>
+    <lastmod>2016-12-30T10:40:56+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/markdown/</loc>
+    <lastmod>2016-12-15T15:58:42+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/objective-c/</loc>
+    <lastmod>2017-01-17T14:26:31+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/ocserv/</loc>
+    <lastmod>2017-02-15T17:15:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/post/</loc>
+    <lastmod>2017-03-12T17:51:07+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/shadowsocks/</loc>
+    <lastmod>2017-02-14T12:33:16+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/swift/</loc>
+    <lastmod>2016-12-30T10:40:56+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/vim/</loc>
+    <lastmod>2017-03-12T17:51:07+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mjyi.github.io/tags/vpn/</loc>
+    <lastmod>2017-02-15T17:15:43+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>
