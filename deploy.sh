@@ -7,7 +7,7 @@ if [ $# -eq 1 ]
 fi
 
 # update
-git add -A
+git add .
 
 git commit -m "$msg"
 

@@ -827,7 +827,7 @@ iptables -A FORWARD -s 192.168.1.0/24 -j ACCEPT
 
 &lt;p&gt;凭借回忆操作写下这些步骤，怕只能下次安装的时候来验证了！&lt;/p&gt;
 
-&lt;p&gt;、、over..&lt;/p&gt;
+&lt;p&gt;、、over..（又瞎折腾一次。。。。）&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;后记：&lt;/strong&gt;&lt;/p&gt;
 
