@@ -48,23 +48,23 @@
 	</nav>
     <nav id="nav">
     <ul id="mainnav">
-    <li><a href="/">
-            <span class="icon"><i aria-hidden="true" class="icon-home"></i></span>
-            <span>首页</span>
-        </a>
-    </li>
     <li><a href="/post/">
             <span class="icon"> <i aria-hidden="true" class="icon-quill"></i></span>
             <span>技术</span>
         </a>
     </li>
-    <li><a href="/daily/">
+    <li><a href="/essay/">
             <span class="icon"> <i aria-hidden="true" class="icon-pencil"></i></span>
-            <span>日常</span>
+            <span>随笔</span>
          </a>
     </li>
+        <li><a href="/other/">
+            <span class="icon"><i aria-hidden="true" class="icon-leaf"></i></span>
+            <span>其他</span>
+        </a>
+    </li>
     <li><a href="/about">
-            <span class="icon"> <i aria-hidden="true" class="icon-info"></i></span>
+            <span class="icon"> <i aria-hidden="true" class="icon-heart"></i></span>
             <span>关于</span>
         </a>
     </li>
@@ -100,40 +100,35 @@
     
         <article class="post">
     <header>
-      <h2><a href="https://mjyi.github.io/post/1702-ocserv/">记OpenConnect VPN server的搭建 </a> </h2>
-      <div class="post-meta">Wed, Feb 15, 2017 -  Read in 3 Min </div>
+      <h2><a href="https://mjyi.github.io/other/1702-ocserv/">记OpenConnect VPN server的搭建 </a> </h2>
+      <div class="post-meta">Wed, Feb 15, 2017 </div>
     </header>
- 	<article itemprop="articleBody" id="content">
-    	<p>iphone 上使用VPN 一直是件让人头疼的事。而<code>shadowsocks</code>的iOS客户端，并不像对其它系统那么“友好”。</p>
 
-<p>iOS 系统设置支持<code>IKEv2</code>，<code>IPSec</code>，<code>L2TP</code>。但是用起来很“痛苦”，连接慢，爱断线！</p>
+    <p>目前我认为最好用的<code>VPN</code>是<code>shadowsocks</code>。配合<code>Chrome</code>的<code>SwitchyOmega</code>可实现是否通过代理服务器访问。</p>
 
-<blockquote>
-<p>OpenConnet Server（ocserv）它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。</p>
+<p>很遗憾在苹果设备上，很好支持<code>shadowsocks</code>的<code>App</code>的价钱很高。因此只能使用系统支持的<code>IPSec</code>，<code>L2TP</code>之类的<code>VPN</code>
+,用起来感觉有2个缺点：连接慢，爱断线。(<em>应该是我的优化没做好吧。</em>)</p>
 
-<p>AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。</p>
-</blockquote>
+<ul>
+<li>OpenConnet Server（ocserv）它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。</li>
+<li>AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。
+</li>
+</ul>
 
-<p>对于个人使用，这个优点就够了！！！</p>
-
-<p>vps:
-- Ubuntu 14.04 LTS
-- OpenVZ架构
-</p>
-	</article>
+<p><em>（ubuntu 和 CentOS 两部分）</em></p>
     <footer>
-        <a href='https://mjyi.github.io/post/1702-ocserv/'><nobr>Read more →</nobr></a>
+        <a href='https://mjyi.github.io/other/1702-ocserv/'><nobr>Read more →</nobr></a>
     </footer>
 </article>
 
     
         <article class="post">
     <header>
-      <h2><a href="https://mjyi.github.io/post/1702-shadowsocks/">VPS:搭建shadowsocks服务器 </a> </h2>
-      <div class="post-meta">Tue, Feb 14, 2017 -  Read in 1 Min </div>
+      <h2><a href="https://mjyi.github.io/other/1702-shadowsocks/">VPS:搭建shadowsocks服务器 </a> </h2>
+      <div class="post-meta">Tue, Feb 14, 2017 </div>
     </header>
- 	<article itemprop="articleBody" id="content">
-    	<p><a href="https://github.com/shadowsocks/shadowsocks/tree/master">shadowsocks</a>有多个版本，目前相对稳定的是<code>python</code>版本和<code>C</code>版本(shadowsocks-libev),前者可以通过配置开启多端口，<code>libev</code>版本不能通过修改配置文件来多端口，只能开启多进程，但是后者占用内存小，cpu消耗少。</p>
+
+    <p><a href="https://github.com/shadowsocks/shadowsocks/tree/master">shadowsocks</a>有多个版本，目前相对稳定的是<code>python</code>版本和<code>C</code>版本(shadowsocks-libev),前者可以通过配置开启多端口，<code>libev</code>版本不能通过修改配置文件来多端口，只能开启多进程，但是后者占用内存小，cpu消耗少。</p>
 
 <h2 id="安装">安装</h2>
 
@@ -142,9 +137,8 @@
 <p>下面来安装<a href="https://github.com/shadowsocks/shadowsocks/tree/master">shadowsocks</a>
 
 通过<code>pip</code>安装<code>pyhton</code></p>
-	</article>
     <footer>
-        <a href='https://mjyi.github.io/post/1702-shadowsocks/'><nobr>Read more →</nobr></a>
+        <a href='https://mjyi.github.io/other/1702-shadowsocks/'><nobr>Read more →</nobr></a>
     </footer>
 </article>
 

@@ -1,21 +1,21 @@
 ---
 title: Hexo常用的内置标签记录
 date: 2016-12-15 15:58:42
-categories:
+topics:
   - Hexo
 tags:
   - Markdown
   - Hexo
 
 ---
-
+<!--more-->
 ## Hexo 标签
 
 「标签」(Tag Plugin) 是 Hexo 提供的一种快速生成特定内容的方式。 在标准 Markdown 中，我们无法指定图片的大小，在这种情景下，我们即可使用标签来解决。 Hexo 内置来许多标签来帮助写作者可以更快的书写， [完整的标签列表](https://hexo.io/docs/tag-plugins.html) 可以参考 Hexo 官网。
 
 ### 文本居中的引用
 此标签将生成一个带上下分割线的引用，同时引用内文本将自动居中。 文本居中时，多行文本若长度不等，视觉上会显得不对称，因此建议在引用单行文本的场景下使用。 例如作为文章开篇引用 或者 结束语之前的总结引用。
-<!--more-->
+
 #### 使用方式
 
 - HTML方式：使用这种方式时，给 img 添加属性 class="blockquote-center" 即可。

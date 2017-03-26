@@ -449,7 +449,8 @@ paragraph = nil
       <pubDate>Fri, 23 Dec 2016 16:38:19 +0000</pubDate>
       
       <guid>https://mjyi.github.io/post/1612-remotenotification/</guid>
-      <description>&lt;p&gt;苹果的在iOS 10 中将通知相关的API统一成了&lt;code&gt;UserNotifications.framework&lt;/code&gt;。在新的&lt;code&gt;UserNotifications.framework&lt;/code&gt;中，苹果还增加了撤回单条通知，更新已展示同比，中途修改通知内容，在通知中展示图片、视频，自定义通知UI等一系列新功能。&lt;/p&gt;
+      <description>&lt;p&gt;苹果的在iOS 10 中将通知相关的API统一成了&lt;code&gt;UserNotifications.framework&lt;/code&gt;。在新的&lt;code&gt;UserNotifications.framework&lt;/code&gt;中，苹果还增加了撤回单条通知，更新已展示同比，中途修改通知内容，在通知中展示图片、视频，自定义通知UI等一系列新功能。
+&lt;/p&gt;
 
 &lt;h3 id=&#34;ios-10中使用远程推送&#34;&gt;iOS 10中使用远程推送&lt;/h3&gt;
 
@@ -459,9 +460,9 @@ paragraph = nil
 
 &lt;p&gt;注册通知在&lt;code&gt;- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions NS_AVAILABLE_IOS(3_0);&lt;/code&gt; 方法里。&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;iOS 10&lt;/code&gt;使用&lt;code&gt;- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;&lt;/code&gt; 方法来注册通知。
+&lt;p&gt;&lt;code&gt;iOS 10&lt;/code&gt;使用&lt;code&gt;- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;&lt;/code&gt; 方法来注册通知。&lt;/p&gt;
 
-导入 &lt;code&gt;#import &amp;lt;UserNotifications/UserNotifications.h&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;导入 &lt;code&gt;#import &amp;lt;UserNotifications/UserNotifications.h&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-obj-c&#34;&gt;        // 使用 UNUserNotificationCenter 来管理通知
         UNUserNotificationCenter *uncenter = [UNUserNotificationCenter currentNotificationCenter];

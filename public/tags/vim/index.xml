@@ -15,7 +15,10 @@
       <pubDate>Sun, 12 Mar 2017 17:51:07 +0000</pubDate>
       
       <guid>https://mjyi.github.io/post/1703-vim/</guid>
-      <description>&lt;h3 id=&#34;基本移动&#34;&gt;基本移动&lt;/h3&gt;
+      <description>&lt;p&gt;&lt;code&gt;Vim&lt;/code&gt; 的入门篇。
+&lt;/p&gt;
+
+&lt;h3 id=&#34;基本移动&#34;&gt;基本移动&lt;/h3&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -77,7 +80,7 @@
 &lt;/table&gt;
 
 &lt;p&gt;&lt;strong&gt;Tip:&lt;/strong&gt; 使用&lt;code&gt;Ctrl+o&lt;/code&gt;快速回到上一次(跳转前)光标所在位置.
-&lt;/p&gt;
+HUGOMORE42&lt;/p&gt;
 
 &lt;h3 id=&#34;行内跳转&#34;&gt;行内跳转&lt;/h3&gt;
 

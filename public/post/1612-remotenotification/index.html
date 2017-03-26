@@ -48,23 +48,23 @@
 	</nav>
     <nav id="nav">
     <ul id="mainnav">
-    <li><a href="/">
-            <span class="icon"><i aria-hidden="true" class="icon-home"></i></span>
-            <span>首页</span>
-        </a>
-    </li>
     <li><a href="/post/">
             <span class="icon"> <i aria-hidden="true" class="icon-quill"></i></span>
             <span>技术</span>
         </a>
     </li>
-    <li><a href="/daily/">
+    <li><a href="/essay/">
             <span class="icon"> <i aria-hidden="true" class="icon-pencil"></i></span>
-            <span>日常</span>
+            <span>随笔</span>
          </a>
     </li>
+        <li><a href="/other/">
+            <span class="icon"><i aria-hidden="true" class="icon-leaf"></i></span>
+            <span>其他</span>
+        </a>
+    </li>
     <li><a href="/about">
-            <span class="icon"> <i aria-hidden="true" class="icon-info"></i></span>
+            <span class="icon"> <i aria-hidden="true" class="icon-heart"></i></span>
             <span>关于</span>
         </a>
     </li>
@@ -99,7 +99,8 @@
   <h1 itemprop="name" id="title">iOS:关于iOS的推送</h1>
   <div>
         <article itemprop="articleBody" id="content">
-           <p>苹果的在iOS 10 中将通知相关的API统一成了<code>UserNotifications.framework</code>。在新的<code>UserNotifications.framework</code>中，苹果还增加了撤回单条通知，更新已展示同比，中途修改通知内容，在通知中展示图片、视频，自定义通知UI等一系列新功能。</p>
+           <p>苹果的在iOS 10 中将通知相关的API统一成了<code>UserNotifications.framework</code>。在新的<code>UserNotifications.framework</code>中，苹果还增加了撤回单条通知，更新已展示同比，中途修改通知内容，在通知中展示图片、视频，自定义通知UI等一系列新功能。
+</p>
 
 <h3 id="ios-10中使用远程推送">iOS 10中使用远程推送</h3>
 
@@ -109,9 +110,9 @@
 
 <p>注册通知在<code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions NS_AVAILABLE_IOS(3_0);</code> 方法里。</p>
 
-<p><code>iOS 10</code>使用<code>- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;</code> 方法来注册通知。
+<p><code>iOS 10</code>使用<code>- (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler;</code> 方法来注册通知。</p>
 
-导入 <code>#import &lt;UserNotifications/UserNotifications.h&gt;</code></p>
+<p>导入 <code>#import &lt;UserNotifications/UserNotifications.h&gt;</code></p>
 
 <pre><code class="language-obj-c">        // 使用 UNUserNotificationCenter 来管理通知
         UNUserNotificationCenter *uncenter = [UNUserNotificationCenter currentNotificationCenter];
@@ -274,6 +275,8 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         </section>
         <ul id="categories">
           
+            <li><a href="https://mjyi.github.io//topics/ios">iOS</a> </li>
+          
         </ul>
         <ul id="tags">
           
@@ -288,7 +291,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         <section id="prev">
             &nbsp;<a class="previous" href="https://mjyi.github.io/post/1612-arc-in-swift/"><i class="icon-arrow-left"></i> Swift:Automatic Reference Counting in Swift</a><br>
         </section><section id="next">
-            &nbsp;<a class="next" href="https://mjyi.github.io/post/1612-hexo-tag/">Hexo常用的内置标签记录 <i class="icon-arrow-right"></i></a>
+            &nbsp;<a class="next" href="https://mjyi.github.io/other/1612-hexo-tag/">Hexo常用的内置标签记录 <i class="icon-arrow-right"></i></a>
         </section>
     </div>
 

@@ -2,8 +2,8 @@
 title: VPS:搭建shadowsocks服务器
 thumbnail: 
 date: 2017-02-14 12:33:16
-categories:
-- vps
+topics:
+- VPN
 tags:
 - shadowsocks
 - vpn
