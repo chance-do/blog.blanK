@@ -1,6 +1,6 @@
 # blog.blanK
 
-博客地址：[http://mjyi.github.io/](http://mjyi.github.io/)。
+博客地址：[https://mjyi.github.io/](https://mjyi.github.io/)。
 
 使用 [Hugo](http://hugo.spf13.com) 生成静态网站。 
 
