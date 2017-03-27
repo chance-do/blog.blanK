@@ -18,15 +18,17 @@ git push origin master
 hugo 
 
 # Init Deploy folder
-mkdir deploy_git
+deployPath="deploy_git/"
 
-cd deploy_git/
-
-git init
-
-git remote add origin git@github.com:mjyi/mjyi.github.io.git
-
-git pull origin master
+if [ ! -d "$deployPath" ]; then
+	mkdir "$deployPath"
+	cd "$deployPath"
+	git init
+	git remote add origin git@github.com:mjyi/mjyi.github.io.git
+	git pull origin master
+else
+	cd "$deployPath"
+fi
 
 cp -R ../public/* .
 
