@@ -2,32 +2,8 @@
 
 博客地址：[http://mjyi.github.io/](http://mjyi.github.io/)。
 
-I use [Hugo](http://hugo.spf13.com) to static site Theme by [Steve Francia](http://spf13.com)
+使用 [Hugo](http://hugo.spf13.com) 生成静态网站。 
 
-```
-.
-├── archetypes
-│   └── default.md
-├── content  
-│   ├── about.md
-│   ├── essay
-│   ├── other
-│   └── post
-├── layouts
-│   ├── _default
-│   ├── index.html
-│   ├── link
-│   ├── partials
-│   ├── post
-│   ├── project
-│   ├── section
-│   ├── shortcodes
-│   └── taxonomy
-├── public
-│── static
-│   ├── favicon.png
-│   └── static
-├── config.toml
-├── deploy.sh
+主题文件来自：[Steve Francia](http://spf13.com)
 
-```
+自动部署脚本`deploy.sh`
