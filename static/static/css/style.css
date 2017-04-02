@@ -174,7 +174,7 @@ body>footer{margin-top:2em}
 aside#tail>#search,aside#tail>#explore{text-align:center;width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;display:inline-block;float:left;padding:0 0.375em}
 aside#tail section{margin-bottom:1.5em}
 #sidebar{display:none !important}
-article{min-height:1px;width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;display:inline-block;float:left;padding-bottom:2em}
+article{min-height:1px;width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;display:inline-block;float:left}
 body>footer>div{border-top:1px solid #bdc3c7;padding-bottom:1em;margin-bottom:0;padding-top:.7em}
 body>footer p{margin:0;padding:0;font-size:80%;line-height:1.5}
 #social,.dropdown{display:none !important}
