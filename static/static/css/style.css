@@ -24,7 +24,7 @@ h3{font-size:1em;line-height:1.5em}
 body>header,body>section,body>aside,body>footer,body>.content{margin:0 7.14286%;*zoom:1}
 body>header:before,body>header:after,body>section:before,body>section:after,body>aside:before,body>aside:after,body>footer:before,body>footer:after,body>.content:before,body>.content:after{display:table;content:"";line-height:0}
 body>header:after,body>section:after,body>aside:after,body>footer:after,body>.content:after{clear:both}
-/*p{margin-bottom:1em}*/
+p{margin-bottom:1em}
 article ul,article ol{margin-bottom:1em;margin-left:1em}
 @font-face{font-family:'kvwp';src:url("../fonts/KievitWebPro.eot");src:local("☺"),url("../fonts/KievitWebPro.woff") format("woff"),url("../fonts/KievitOT-Regular.otf") format("opentype");font-weight:normal;font-style:normal}
 @font-face{font-family:'kvwp';src:url("../fonts/KievitWebPro-Bold.eot");src:local("☺"),url("../fonts/KievitWebPro-Bold.woff") format("woff"),url("../fonts/KievitOT-Bold.otf") format("opentype");font-weight:bold;font-style:normal}
@@ -51,7 +51,7 @@ article>footer{text-align:right;line-height:3em}
 .right{float:right}
 em{color:#8b9baa;text-decoration:none}
 h1,h2,h3,h4,h5,h6{color:#2c3e50;font-family:'Fjalla One', serif;text-transform:capitalize;font-weight:400 !important}
-h1#title{font-size:2.5em;line-height:1.14286em;margin:0em 0 0.5em;text-transform:capitalize;text-align:center}
+h1#title{font-size:2.625em;line-height:1.14286em;margin:0em 0 0.5em;text-transform:capitalize;text-align:center}
 h1,h2{font-size:1.625em;line-height:1.38462em;margin:1em 0 0.25em;text-shadow:2px 2px 0px #FFF;text-transform:capitalize;display:inline-block;width:100%}
 h2{font-weight:normal}
 h3{margin:1.5em 0 1.5em}
@@ -181,7 +181,7 @@ body>footer p{margin:0;padding:0;font-size:80%;line-height:1.5}
 #tags{line-height:2}
 #author{width:100% !important;padding-top:2em}
 #next{text-align:right}
-#next,#prev{width:100% !important;padding-top:2em}
+#next,#prev{width:100% !important}
 @media screen and (min-width: 30em){.half,.third,.twothirds{max-width:100% !important}
 #meta>section,#meta>ul{width:50%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;display:inline-block;float:left}
 #popular,#new{width:50%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;display:inline-block;float:left;padding:0 0.375em}
@@ -189,7 +189,7 @@ body>footer p{margin:0;padding:0;font-size:80%;line-height:1.5}
 @media screen and (min-width: 40em){body{font-size:1.2em;line-height:2.11765em}
 h1{text-align:left}
 #meta>div>section,#meta>div>ul{width:33.33333%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;display:inline-block;float:left;vertical-align:top}
-#next,#prev{width:50% !important;padding-top:2em}
+#next,#prev{width:50% !important}
 .half{max-width:14em !important}
 .third{max-width:10em !important}
 .twothirds{max-width:20em !important}

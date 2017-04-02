@@ -28,6 +28,10 @@ if [ ! -d "$deployPath" ]; then
 	git pull origin master
 else
 	cd "$deployPath"
+	git fetch origin
+	git checkout master
+	git reset --hard origin/master
+	git pull origin master
 fi
 
 cp -R ../public/* .
