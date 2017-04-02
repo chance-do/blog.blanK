@@ -9,15 +9,14 @@ tags:
 - vpn
 ---
 
-
 [shadowsocks](https://github.com/shadowsocks/shadowsocks/tree/master)有多个版本，目前相对稳定的是`python`版本和`C`版本(shadowsocks-libev),前者可以通过配置开启多端口，`libev`版本不能通过修改配置文件来多端口，只能开启多进程，但是后者占用内存小，cpu消耗少。
-
+<!--more-->
 ## 安装
 
 我的`VPS`已经安装好了`Ubuntu 14.04 x86 `系统，内存`512MB`尚可。
 
 下面来安装[shadowsocks](https://github.com/shadowsocks/shadowsocks/tree/master)
-<!--more-->
+
 通过`pip`安装`pyhton`
 ```
 apt-get install python-pip
@@ -45,13 +44,13 @@ easy_install pip
 ```
 ssserver -p 443 -k password -m aes-256-cfb
 
-# 后台运行
+## 后台运行
 sudo ssserver -p 443 -k password -m aes-256-cfb --user nobody -d start
 
-# 停止
+## 停止
 sudo ssserver -d stop
 
-# 日志
+## 日志
 sudo less /var/log/shadowsocks.log
 ```
 

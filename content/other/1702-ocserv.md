@@ -17,9 +17,9 @@ toc: true
 
 - OpenConnet Server（ocserv）它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。
 - AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。
-<!--more-->
 
 *（ubuntu 和 CentOS 两部分）*
+<!--more-->
 # 一、Ununtu 14.04 LTS 安装ocserv
 vps:
 
