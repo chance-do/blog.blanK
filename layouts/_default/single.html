@@ -6,7 +6,7 @@
         <h2 itemprop="name" id="title" style="text-align: left;">{{ .Title }}</h2>
         <div>
             <header>
-                <div class="post-meta" style="line-height: 5em;">{{ .Date.Format "Mon, Jan 2, 2006" }} - {{ .WordCount}} Words - Read in {{ .ReadingTime }} Min </div>
+                <div class="post-meta" style="line-height: 5em;">{{ .Date.Format "Mon, Jan 2, 2006" }}</div>
             </header>
             <article itemprop="articleBody" id="content">
                 {{ .Content }}
