@@ -15,7 +15,6 @@ topics:
 # Homebrew
 **macOS 的包管理工具，许多开发用到的工具都由它安装**</br>
 详见：[Homebrew](https://brew.sh/)
-<!--more-->
 
 - Install [Homebrew](https://brew.sh/)
 
@@ -40,6 +39,9 @@ pod setup
 
 ## Using
 ```
+#Init
+pod init
+
 # open source
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -66,7 +68,21 @@ end
 
 # Sublime Text 3
 下载安装[Sublime Text 3](https://www.sublimetext.com/3).</br>
-关于`Sublime Text 3`的[相关文档](http/:/feliving.github.io/Sublime-Text-3-Documentation/index.html)。
+关于`Sublime Text 3`的[相关文档](http://feliving.github.io/Sublime-Text-3-Documentation/)。
+
+关于上述文档中关于 OS X Command Line 的描述有些许不完善的地方。
+```
+//具体路径参照用户所安装的目录。
+ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" ~/bin/subl
+```
+执行上面的命令往往会报一些权限的问题。
+因为在EI Capitan 以及更高的系统版本中，用户是没有对`usr/bin`的写的权限的。
+但是我们可以写入`usr/local/bin`中，因为一般情况下，它也是用户的默认路径。
+
+```
+sudo rm /usr/local/bin/subl
+sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
+```
 
 - 插件
 	+ [Package Control](https://packagecontrol.io)

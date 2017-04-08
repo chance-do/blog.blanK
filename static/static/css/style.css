@@ -80,7 +80,7 @@ aside a{text-decoration:none;color:#7f8c8d;-webkit-transition:all 0.25s ease-in;
 aside a:hover{color:#3498db}
 figcaption{font-size:.7em}
 blockquote{font-family:Georgia, serif;font-style:italic;width:80%;margin:0.25em auto;padding:0.25em 1em;line-height:1.45;position:relative;text-align:justify}
-blockquote:before{display:block;content:"\201C";position:absolute;font-size:1000%;left:-.24em;top:-.4em;opacity:.3;width:100%;font-family:'arial';font-style:normal}
+/*blockquote:before{display:block;position:absolute;font-size:1000%;left:-.24em;top:-.4em;opacity:.3;width:100%;font-family:'arial';font-style:normal}*/
 blockquote cite{color:#999;font-size:90%;display:block;text-align:right}
 blockquote cite:before{content:"\2014 \2009"}
 a.rss{color:#ffaa31;background:#fff}
