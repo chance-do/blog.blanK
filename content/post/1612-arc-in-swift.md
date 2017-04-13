@@ -3,6 +3,7 @@ title: Swift:Automatic Reference Counting in Swift
 date: 2016-12-30 10:40:56
 topics:
 - iOS
+- development
 tags:
 - Swift
 - iOS
