@@ -12,3 +12,6 @@ theme = "orange"
 [indexes]
     tag = "tags"
     topic = "topics"
+
+[Params]
+	DateFormat = "2006年01月02日"
