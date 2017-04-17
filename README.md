@@ -2,7 +2,7 @@
 
 使用 [Hugo](http://hugo.spf13.com)生成的静态网站。
 
-Demo：[https://mjyi.github.io/](https://mjyi.github.io/)。
+**[Demo](https://mjyi.github.io/Hugo-theme-Orange/)**
 
 Hugo 是用Go语言编写的静态网站生成器，它使用简单，效率却非常高，几十个页面生成不到1s。
 并且带有`watch`的调试功能。对于markdown 文章，保存修改后。Hugo 会检测到更新并刷新到页面。
@@ -11,6 +11,8 @@ Hugo 是用Go语言编写的静态网站生成器，它使用简单，效率却�
 
 主题参考了 [http://www.ahonn.me/hexo-theme-even/](http://www.ahonn.me/hexo-theme-even/)，一款`hexo`上的主题。
 在theme 目录下,名叫`orange`。因为感觉主题还不是很完善，所以并没用提交 `hugoThemes`。
+
+地址：[https://github.com/mjyi/Hugo-theme-Orange](https://github.com/mjyi/Hugo-theme-Orange)
 
 # Usage
 
