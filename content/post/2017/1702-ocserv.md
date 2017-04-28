@@ -281,7 +281,8 @@ end script
 [EPEL](http://fedoraproject.org/wiki/EPEL)仓库白提供`ocserv`，所以可以通过`yum`安装
 ```bash
 yum install epel-release
-yum install -y gnutls-utils
+yum install ocserv
+yum install -y gnutls-utils   //证书生成工具
 ```
 ## 生成证书（同ubuntu）
 
