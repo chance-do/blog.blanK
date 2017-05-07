@@ -1,13 +1,12 @@
 ---
 title: VPS:搭建shadowsocks服务器
-thumbnail: 
 date: 2017-02-14 12:33:16
 topics:
 - VPN
 - development
 tags:
-- shadowsocks
 - vpn
+comments: true
 ---
 
 [shadowsocks](https://github.com/shadowsocks/shadowsocks/tree/master)有多个版本，目前相对稳定的是`python`版本和`C`版本(shadowsocks-libev),前者可以通过配置开启多端口，`libev`版本不能通过修改配置文件来多端口，只能开启多进程，但是后者占用内存小，cpu消耗少。

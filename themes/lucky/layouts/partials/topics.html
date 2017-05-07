@@ -1,0 +1,8 @@
+<div class="article-categories">
+    {{ range .Params.topics }}
+    <div>
+    	<span></span><a class="article-category-link" href="/topics/{{ urlize . }}">{{ . }}</a>
+
+    </div>
+	{{ end }}
+</div>

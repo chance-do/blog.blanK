@@ -2,7 +2,8 @@
 title = "" 
 description = "" 
 tags = [ ] 
-topics = ["development", "" ]
+topics = ["", ""]
 draft = true
+comments = true
 +++
 

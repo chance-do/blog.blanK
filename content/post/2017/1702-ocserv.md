@@ -5,10 +5,9 @@ topics:
 - VPN
 - development
 tags:
-- ocserv
 - vpn
-
 toc: true
+comments: true
 ---
 
 目前我认为最好用的`VPN`是`shadowsocks`。配合`Chrome`的`SwitchyOmega`可实现是否通过代理服务器访问。
@@ -427,12 +426,10 @@ iptables -A FORWARD -s 192.168.1.0/24 -j ACCEPT
 
 、、over..（又瞎折腾一次。。。。）
 
-**后记：**
-
-终于能够舒服的看片了！
-
 iphone 客户端：在`APP Store` 搜索`AnyConnect`。</br>
-*参考：*</br>
+
+**参考：**
+
 [官方文档](http://www.infradead.org/ocserv/manual.html)</br>
 [https://bitinn.net/11084/](https://bitinn.net/11084/)</br>
 [OpenConnect VPN server](https://github.com/iMeiji/shadowsocks_install/wiki/OpenConnect-VPN-server)

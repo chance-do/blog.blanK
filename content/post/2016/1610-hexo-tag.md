@@ -6,6 +6,7 @@ topics:
 tags:
   - Markdown
   - Hexo
+ comments: true
 ---
 <!--more-->
 ## Hexo 标签

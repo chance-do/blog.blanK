@@ -2,7 +2,6 @@
 date: 2017-03-23T13:09:52+08:00
 description: ""
 tags:
-- block
 - Objective-C
 title: "Block和self的循环引用"
 topics:

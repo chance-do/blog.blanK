@@ -7,6 +7,7 @@ topics:
 tags:
 - Swift
 - iOS
+comments: true
 ---
 
 原文地址：[Automatic Reference Counting](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48)</br>

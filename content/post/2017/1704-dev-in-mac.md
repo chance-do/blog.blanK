@@ -5,13 +5,14 @@ tags:
 - development
 - sublime
 - cocoapods
-- iOS
 title: "Mac开发的一些基本配置"
 topics:
+comments: true
 ---
 >工欲善其事，必先利其器。
 
 记一些作为iOS开发必装的工具包。
+<!--more-->
 # Homebrew
 **macOS 的包管理工具，许多开发用到的工具都由它安装**</br>
 详见：[Homebrew](https://brew.sh/)
@@ -131,7 +132,7 @@ sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/
 ```
 主题很美观。
 
-{{% img src="media/sublime_snapshot.png" %}}
+![](/media/sublime_snapshot.png)
 
 # 为git设置代理
 

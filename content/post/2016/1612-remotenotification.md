@@ -7,6 +7,7 @@ topics:
 tags:
 - iOS
 - Objective-C
+comments: true
 ---
 
 

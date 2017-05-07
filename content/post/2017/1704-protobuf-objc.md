@@ -5,13 +5,11 @@ tags:
 - iOS
 - Protobuf
 topics:
-- development
 title: "Protocol Buffer Objerctive-C Compiler(protoc)"
-
+comments: true
 ---
 
-# 什么是`Protocol buffers`?
-
+## 什么是Protocol buffers?
 > Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 
 Protocol buffers 是一种以有效且可扩展的格式对结构化数据进行编码的方式。它和xml类似，但是比xml更轻量，更快速，更简单。<br>
@@ -27,7 +25,7 @@ Objective-C Protocol Buffers 实现需要以下环境:
 - Xcode 7.0 (or later).
 - 出于性能考虑，代码没有使用ARC。
 
-# 安装
+## 安装
 
 Protobuf 可以通过brew和source code 两种方式安装。<br>
 在这里，我推荐使用源代码安装。到[这里][release]选择发行的版本。
@@ -54,7 +52,7 @@ make
  ln -s ~/<install_directory>/src/protoc /usr/local/bin/   #注意绝对路径。
 ```
 
-# 编译调用
+## 编译调用
 Objective-C的编译器已经安装好了，下面让我们在项目中测试一下使用。
 
 自定义结构化数据 `.protoc` 并编译。
@@ -72,7 +70,7 @@ message User {
 当然，你也可以自定义文件输出目录，但是不能忘记参数`-objc_out`。<br>
 此时会在当前目录生成`Foo.pbobjc.h`	和`Foo.pbobjc.m`两个文件。将这两个文件添加到项目中去。
 
-# 项目整合
+## 项目整合
 
 首先要将Objective C Protocol Buffers runtime library 集成到项目中去。
 
