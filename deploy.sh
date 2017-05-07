@@ -7,6 +7,7 @@ if [ $# -eq 1 ]
   then msg="$1"
 fi
 
+rm -rf public
 # update blog.blanK
 git add .
 
@@ -32,7 +33,9 @@ else
 	git checkout master
 	git reset --hard origin/master
 	git pull origin master
+	rm -rf ./*
 fi
+
 
 cp -R ../public/* .
 
