@@ -4,6 +4,7 @@ title: About Me
 comments: true
 ---
 
+
 关于我
 ---
 
@@ -24,7 +25,9 @@ Github: [https://github.com/mjyi](https://github.com/mjyi)
 关于博客
 ========
 
-之前在大学时玩VPS时写过一段时间博客，很可惜没有坚持下去，在工作后又重新开了博客。也算是有了自己的地盘了。
-
-
 博客采用[Hugo](http://gohugo.io/)+ [Github](https://github.com/)的方式部署。
+
+
+---
+
+>穷困本身最大的可怕之处，在于由于对金钱的过度敏感，而导致短视与狭隘，做事情没耐心，永远向钱看齐，只追求短期利益，而不对自己进行长期的投资。

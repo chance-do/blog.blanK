@@ -1,5 +1,5 @@
 baseurl = "https://mjyi.github.io/"
-title = "Blank Blog"
+title = "Blank blog"
 canonifyurls = true
 paginate = 10
 theme = "lucky"
@@ -10,12 +10,12 @@ disqusShortname = "mjyi-io" #delete or comment to disable Disqus comments
 MetaDataFormat = "yaml"
 
 [author]
-  name = "Blank"
+  name = "ITXU"
 
 [params]
   DateForm = "Jan 2, 2006"
-  Description = "念念不忘，必有回响。"
-  Author = "Blank"
+  Description = "You want something. Go get it!"
+  Author = "itxu"
   email = "huy948946@gmail.com" #Remove this line if you would prefer not to use an email button in the footer.
   postSummariesFrontPage = 4 #Number of post summaries to show on front page, comment out to allow default(4)
   showReadTime = true #set to false to exclude read time from header of post
