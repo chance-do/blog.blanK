@@ -33,7 +33,7 @@ else
 	git checkout master
 	git reset --hard origin/master
 	git pull origin master
-	rm -rf ./*
+
 fi
 
 
