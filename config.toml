@@ -1,4 +1,4 @@
-baseurl = "https://mjyi.github.io/"
+baseurl = "blog.itxuz.com"
 title = "Blank blog"
 canonifyurls = true
 paginate = 10
@@ -16,13 +16,13 @@ MetaDataFormat = "yaml"
   DateForm = "Jan 2, 2006"
   Description = "You want something. Go get it!"
   Author = "itxu"
-  email = "huy948946@gmail.com" #Remove this line if you would prefer not to use an email button in the footer.
+  email = "itxuz@itxuz.com" #Remove this line if you would prefer not to use an email button in the footer.
   postSummariesFrontPage = 4 #Number of post summaries to show on front page, comment out to allow default(4)
   showReadTime = true #set to false to exclude read time from header of post
 
-[[params.social]]
-  title = "twitter"
-  url = ""
+# [[params.social]]
+#   title = "twitter"
+#   url = ""
 [[params.social]]
   title = "github"
   url = "https://github.com/mjyi"
