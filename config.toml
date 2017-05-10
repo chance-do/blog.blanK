@@ -1,4 +1,4 @@
-baseurl = "blog.itxuz.com/"
+baseurl = "https://mjyi.github.io/"
 title = "Blank blog"
 canonifyurls = true
 paginate = 10
