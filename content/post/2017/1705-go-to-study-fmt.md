@@ -3,7 +3,7 @@ comments: true
 date: 2017-05-23
 description: ""
 tags:
-- Gloang
+- Golang
 title: '"Go" to Study: fmt'
 topics:
 ---
