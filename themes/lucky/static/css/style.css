@@ -2724,7 +2724,11 @@ input[type="search"]::-webkit-search-decoration {
     line-height: 1.8;
     min-height: 500px;
 }
-
+@media only screen and (min-width: 768px) {
+    #main {
+        max-width: 800px;
+    }
+}
 @media only screen and (min-width: 1280px) {
     #main {
         margin: 0 auto;
@@ -3327,6 +3331,7 @@ article .article-content {
     padding: 1em 0%;
     font-size: 100%;
     border-bottom: 1px solid #eee;
+    padding-bottom: 2em;
 }
 
 article .article-content:before,
@@ -3365,12 +3370,15 @@ article .article-content h3 {
     font-size: 140%;
     line-height: 1em;
     margin-top: 1.3em;
+    padding-bottom: 0.3em;
 }
 
 article .article-content h4,
 article .article-content h5,
 article .article-content h6 {
     font-size: 140%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 article .article-content h1,
@@ -3850,6 +3858,8 @@ footer.article-footer {
 .article-nav {
     padding-left: 20px;
     padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 5px;
     /*border-left: 1px solid rgba(0,0,0,0.04);
   border-right: 1px solid rgba(0,0,0,0.04);
   -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.03);

@@ -1,8 +1,8 @@
 +++ 
 title = "" 
 description = "" 
-tags = [ ] 
-topics = ["", ""]
+tags = [""] 
+topics = ""
 draft = true
 comments = true
 +++
