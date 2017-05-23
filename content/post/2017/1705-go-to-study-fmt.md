@@ -11,7 +11,7 @@ topics:
 
 **fmt**包含有格式化I/O函数，类似于C语言的`printf`和`scanf`。
 格式字符串的规则来源于C但更简单一些。
-
+<!--more-->
 ## print.go
 
 ### func Errorf
