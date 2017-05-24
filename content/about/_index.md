@@ -30,4 +30,4 @@ Github: [https://github.com/mjyi](https://github.com/mjyi)
 
 ---
 
->穷困本身最大的可怕之处，在于由于对金钱的过度敏感，而导致短视与狭隘，做事情没耐心，永远向钱看齐，只追求短期利益，而不对自己进行长期的投资。
+>The most fearful enemy is not having a firm conviction.
