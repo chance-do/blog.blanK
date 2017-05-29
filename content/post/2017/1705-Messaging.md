@@ -5,16 +5,15 @@ description: ""
 tags:
 - iOS
 - runtime
-title: Messaging
+title: Objective-C Messaging
 ---
-
-
 
 
 ## 消息传递（Messaging）
 
 在C语言中，调用一个方法其实就是跳转到内存中的某一点，并开始执行一段代码。没有动态特性特性，因为这个是在编译时就决定的。
 但是在`Objective-C`，在运行时之前，消息不会绑定到方法实现。例如代码`[receiver message]`,实际上是编译器会在运行时给`receiver` 发送一条`message`,`message`可以由`receiver`处理，也可以被转发给另一个对象。等同于：
+<!--more-->
 
 ```objc
 objc_msgSend(receiver, selector)
@@ -28,9 +27,9 @@ objc_msgSend(receiver, selector)
 - **op** :   处理消息的方法的选择器
 - **...** :  包含方法参数的变量参数列表。
 
-要想进一步了解其中的关键，需要先了解一些结构体。*objc_class*,*objc_object*,*objc_method*
+要想进一步了解其中的关键，需要先了解一些结构。*objc_class*,*objc_object*,*objc_method*
 
-消息传递的关键在于 `objc_object` 中的 isa 指针和 `objc_class` 中的 class dispatch table。
+而消息传递的关键在于 `objc_object` 中的 isa 指针和 `objc_class` 中的 class dispatch table。
 
 ```objc
 
@@ -75,9 +74,9 @@ struct objc_class {
 /* Use `Class` instead of `struct objc_class *` */
 
 ```
-> objc 关于runtime的代码可以在[https://opensource.apple.com/tarballs/objc4/](https://opensource.apple.com/tarballs/objc4/)下载查看
+> objc 关于runtime的代码可以在[https://opensource.apple.com/tarballs/objc4/][runtime-open]下载查看
 
->  char *method_types 参考：[Type Encodings](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html)
+>  char *method_types 参考：[Type Encodings][type-encodings]
 
 `objc_method_list` 可以看作一个有 `objc_method` 元素的可变长度的数组。
 
@@ -102,7 +101,7 @@ struct objc_class {
 ### 代码
 > Talk is Cheep, show me the code.
 
- 举例：创建一个`Cat`类，不实现任何方法。通过向`Cat`的实例对象调用方法,验证消息传递和消息转发。
+ 举例：创建一个`Cat`类，通过向`Cat`的实例对象调用不实现的方法,验证消息传递和消息转发。
 
 #### One
 
@@ -147,7 +146,10 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
-结果输出为：`Cat run！`
+结果输出为：
+
+    Cat run！
+
 
 #### Two
 
@@ -191,7 +193,10 @@ int main(int argc, const char * argv[]) {
 }
 
 ```
-结果输出：`汪 汪!`
+结果输出：
+
+    汪 汪!
+
 
  Cat 类 实现了`-forwardingTargetForSelector:` 方法，那么Runtime 就会调用这个方法，消息转发给其他对象，整个消息发送的过程就会被重启，发送的对象会变成你返回的那个对象。
 
@@ -242,7 +247,9 @@ int main(int argc, const char * argv[]) {
 @end
 ```
 
-输出结果：`Cat eat！`
+输出结果：
+    
+    Cat eat
 
 ## 总结
 
@@ -251,6 +258,14 @@ int main(int argc, const char * argv[]) {
 
 ## Reference
 
-[Objective-C Runtime Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048)
+[Objective-C Runtime Programming Guide][guide]
 
-[Objective-C Runtime](http://tech.glowing.com/cn/objective-c-runtime/)
+[Objective-C Runtime][objc-runtime]
+
+
+[guide]: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048
+[objc-runtime]: http://tech.glowing.com/cn/objective-c-runtime/
+
+[runtime-open]: https://opensource.apple.com/tarballs/objc4/
+
+[type-encodings]:https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
