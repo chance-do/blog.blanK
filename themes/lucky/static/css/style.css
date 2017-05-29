@@ -3474,17 +3474,17 @@ article .article-content strong code,
 article .article-content em code,
 article .article-content table th>code,
 article .article-content table td>code {
-    font-family: Monaco, Menlo, Consolas, Courier New, monospace;
-    padding: 0.2em 0.4em;
+    /*font-family: Monaco, Menlo, Consolas, Courier New, monospace;*/
+    padding: 0.2em 0.2em;
     margin: 0 2px;
     font-size: 90%;
     color: #5ac8fa;
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(0, 0, 0, 0.00);
     border-radius: 0.25em;
 }
 
 article .article-content p {
-    line-height: 1.5;
+    /*line-height: 1.5;*/
     margin-top: 0.7em;
 }
 
@@ -4660,8 +4660,9 @@ section.comment {
 .article-content pre,
 .article-content .highlight,
 .article-content .highlight pre {
-    background: #eee;
-    margin: 0.5em 0;
+    background: #fff;
+    margin: 0.5em 0.5em;
+    padding: .5em .5em;
     color: #4d4d4c;
     line-height: 1.5;
     font-size: 0.8em;
