@@ -7,7 +7,7 @@ copyright = "Copyright (c) 2015 - 2017. All Rights Reserved."
 MetaDataFormat = "yaml"
 theme = "Gemini"
 googleAnalytics = "UA-97310918-1" # delete or comment to disable Google Analytics JS generation
-disqusShortname = "mjyi-io" #delete or comment to disable Disqus comments
+disqusShortname = "" #delete or comment to disable Disqus comments
 
 
 [params]
