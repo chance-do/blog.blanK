@@ -2,8 +2,6 @@
 
 使用 [Hugo](http://hugo.spf13.com)生成的静态网站。
 
-**[Demo](https://mjyi.github.io/Hugo-theme-Orange/)**
-
 Hugo 是用Go语言编写的静态网站生成器，它使用简单，效率却非常高，几十个页面生成不到1s。
 并且带有`watch`的调试功能。对于markdown 文章，保存修改后。Hugo 会检测到更新并刷新到页面。
 
@@ -25,3 +23,7 @@ hugo server
 # 部署
 
 每次更新文件后使用脚本提交更新。`deploy.sh`
+
+# 更新
+
+2017.6.3 更换主题**Gemini**

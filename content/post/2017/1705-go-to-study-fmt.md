@@ -1,17 +1,18 @@
 ---
 comments: true
 date: 2017-05-23
-description: ""
 tags:
 - Golang
 title: '"Go" to Study: fmt'
-topics:
+categories:
+- 读书笔记
+toc: true
 ---
 
 
 **fmt**包含有格式化I/O函数，类似于C语言的`printf`和`scanf`。
 格式字符串的规则来源于C但更简单一些。
-<!--more-->
+
 ## print.go
 
 ### func Errorf

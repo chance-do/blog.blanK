@@ -1,11 +1,14 @@
 ---
 comments: true
 date: 2017-05-25
-description: ""
+categories:
+- 技术文章
 tags:
 - iOS
 - runtime
 title: Objective-C Messaging
+toc: true
+image: /images/thumbs/5.jpg
 ---
 
 
@@ -13,7 +16,7 @@ title: Objective-C Messaging
 
 在C语言中，调用一个方法其实就是跳转到内存中的某一点，并开始执行一段代码。没有动态特性特性，因为这个是在编译时就决定的。
 但是在`Objective-C`，在运行时之前，消息不会绑定到方法实现。例如代码`[receiver message]`,实际上是编译器会在运行时给`receiver` 发送一条`message`,`message`可以由`receiver`处理，也可以被转发给另一个对象。等同于：
-<!--more-->
+
 
 ```objc
 objc_msgSend(receiver, selector)

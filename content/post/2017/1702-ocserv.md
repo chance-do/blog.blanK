@@ -1,11 +1,11 @@
 ---
 title: 记OpenConnect VPN server的搭建
 date: 2017-02-15 17:15:43
-topics:
-- VPN
-- development
+categories:
+- 技术文章
 tags:
 - vpn
+- AnyConnect
 toc: true
 comments: true
 ---
@@ -19,7 +19,7 @@ comments: true
 - AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。
 
 *（ubuntu 和 CentOS 两部分）*
-<!--more-->
+
 # 一、Ununtu 14.04 LTS 安装ocserv
 vps:
 

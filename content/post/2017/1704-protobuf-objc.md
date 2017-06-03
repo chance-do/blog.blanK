@@ -4,9 +4,11 @@ description: ""
 tags: 
 - iOS
 - Protobuf
-topics:
+categories:
+- 技术文章
 title: "Protocol Buffer Objerctive-C Compiler(protoc)"
 comments: true
+toc: true
 ---
 
 ## 什么是Protocol buffers?
@@ -14,7 +16,7 @@ comments: true
 
 Protocol buffers 是一种以有效且可扩展的格式对结构化数据进行编码的方式。它和xml类似，但是比xml更轻量，更快速，更简单。<br>
 你可以定义自己想要的结构化数据，然后可以使用特殊的生成源代码轻松地将结构化数据写入和读取各种数据流并使用各种语言。
-<!--more-->
+
 **Protocol buffers项目的主页在[这里][protobuf]。**
 
 **开发指南在[这里][guide]。**

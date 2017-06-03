@@ -1,13 +1,13 @@
 ---
 title: Swift:Automatic Reference Counting in Swift
 date: 2016-12-30 10:40:56
-topics:
-- iOS
-- development
+categories:
+- 读书笔记
 tags:
 - Swift
 - iOS
 comments: true
+toc: true
 ---
 
 原文地址：[Automatic Reference Counting](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48)</br>
@@ -16,7 +16,7 @@ comments: true
 `Swift` 使用自动引用计数*(ARC)*机制来追踪和管理你的APP的内存使用。在大多数情况下，这意味着内存管理在Swift中“正常工作”，不需要自己考虑内存管理。ARC会自动释放类实例所占用的内存。</br>
 但是，少数情况下，`ARC `需要更多关于你和你代码之间的关系信息，以方便帮助你管理内存。</br>
 **NOTE:** 引用计数仅适用于类的实例。结构和枚举是值类型，而不是引用类型，不会通过引用存储和传递。
-<!--more-->
+
 
 ## ARC工作机制
 

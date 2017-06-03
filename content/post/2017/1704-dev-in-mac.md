@@ -2,17 +2,19 @@
 date: 2017-04-05T14:17:51+08:00
 description: ""
 tags:
-- development
+- 开发环境
 - sublime
 - cocoapods
 title: "Mac开发的一些基本配置"
-topics:
+categories:
+- 备忘
 comments: true
+toc: true
 ---
 >工欲善其事，必先利其器。
 
 记一些作为iOS开发必装的工具包。
-<!--more-->
+
 # Homebrew
 **macOS 的包管理工具，许多开发用到的工具都由它安装**</br>
 详见：[Homebrew](https://brew.sh/)

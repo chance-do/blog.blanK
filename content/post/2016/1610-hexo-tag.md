@@ -1,14 +1,15 @@
 ---
 title: Hexo常用的内置标签记录
 date: 2016-10-15 15:58:42
-topics:
-  - Hexo
+categories:
+  - 技术文章
 tags:
   - Markdown
   - Hexo
 comments: true
+toc: true
 ---
-<!--more-->
+
 ## Hexo 标签
 
 「标签」(Tag Plugin) 是 Hexo 提供的一种快速生成特定内容的方式。 在标准 Markdown 中，我们无法指定图片的大小，在这种情景下，我们即可使用标签来解决。 Hexo 内置来许多标签来帮助写作者可以更快的书写， [完整的标签列表](https://hexo.io/docs/tag-plugins.html) 可以参考 Hexo 官网。

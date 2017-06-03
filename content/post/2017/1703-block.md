@@ -4,10 +4,10 @@ description: ""
 tags:
 - Objective-C
 title: "Block和self的循环引用"
-topics:
-- development
-- iOS
+categories:
+- 技术文章
 draft: true
+toc: true
 ---
 
 Block
@@ -35,7 +35,7 @@ block对象就是一个结构体，里面有isa指针指向自己的类（global
 block结构体的构造函数的参数，包括函数指针，描述block的结构体，自动截获的变量（全局变量不用截获），引用到的__block变量。(__block对象也会转变成结构体)block代码块在编译的时候会生成一个函数，函数第一个参数是前面说到的block对象结构体指针。
 执行block，相当于执行block里面__forwarding里面的函数指针。
 多用于参数传递, 代替代理方法, (有多个参数需要传递或者多个代理方法需要实现还是推荐使用代理方法), 少用于当做返回值传递.
-<!--more-->
+
 block是一个OC对象, 它的功能是保存代码片段, 预先准备好代码, 并在需要的时候执行.
 关键点：
 - `block`是在栈上创建的

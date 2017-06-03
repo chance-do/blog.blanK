@@ -1,18 +1,18 @@
 ---
 title: iOS:关于iOS的推送
 date: 2016-12-23 16:38:19
-topics:
-- iOS
-- development
+categories:
+- 技术文章
 tags:
 - iOS
-- Objective-C
+- 推送
 comments: true
+toc: true
 ---
 
 
 苹果的在iOS 10 中将通知相关的API统一成了`UserNotifications.framework`。在新的`UserNotifications.framework`中，苹果还增加了撤回单条通知，更新已展示同比，中途修改通知内容，在通知中展示图片、视频，自定义通知UI等一系列新功能。
-<!--more-->
+
 ### iOS 10中使用远程推送
 
 在`Project` -> `Project Setting` - > `Capabilities`, 打开 `Push Notifications` 开关。

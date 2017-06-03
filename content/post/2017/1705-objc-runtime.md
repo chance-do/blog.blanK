@@ -2,11 +2,14 @@
 comments: true
 date: 2017-05-24
 description: ""
+categories:
+- 技术文章
 tags:
 - runtime
 - iOS
 title: "Objective-C Runtime"
 draft: true
+toc: true
 ---
 
 ## Runtime 交互
