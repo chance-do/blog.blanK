@@ -15,7 +15,7 @@ disqusShortname = "mjyi-io" #delete or comment to disable Disqus comments
   Keywords = "独立博客,程序员,读书笔记,技术分享,iOS"
   Author = "浅浅浅"
   email = "itxuz@itxuz.com"
-  cloudTieKey = "40d2eda1e745418b9ea333c412277b14" #网易云跟帖 key
+  cloudTieKey = "" #网易云跟帖 key
   recentPostCount = 7
 
 [[params.social]]
