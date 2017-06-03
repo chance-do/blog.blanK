@@ -8,7 +8,6 @@ tags:
 - runtime
 title: Objective-C Messaging
 toc: true
-image: /images/thumbs/5.jpg
 ---
 
 
