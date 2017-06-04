@@ -14,6 +14,8 @@ disqusShortname = "mjyi-io" #delete or comment to disable Disqus comments
   Author = "浅浅浅"
   cloudTieKey = "40d2eda1e745418b9ea333c412277b14" #delete or comment to disable Cloud Tie
   recentPostCount = 7
+  intro = ["I am a iOS Developer", "Work in Hangzhou"]
+
 
 [[params.social]]
   title = "Email"
