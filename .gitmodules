@@ -1,0 +1,3 @@
+[submodule "themes/Gemini"]
+	path = themes/Gemini
+	url = https://github.com/mjyi/Gemini.git
