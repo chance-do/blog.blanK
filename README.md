@@ -1,9 +1,6 @@
 # Blog
 
-使用 [Hugo](http://hugo.spf13.com)生成的静态网站。
-
-Hugo 是用Go语言编写的静态网站生成器，它使用简单，效率却非常高，几十个页面生成不到1s。
-并且带有`watch`的调试功能。对于markdown 文章，保存修改后。Hugo 会检测到更新并刷新到页面。
+使用 [Hugo](https://gohugo.io)生成的静态网站。
 
 # Usage
 
@@ -12,6 +9,9 @@ Hugo 是用Go语言编写的静态网站生成器，它使用简单，效率却�
 ```
 git clone https://github.com/mjyi/blog.blanK.git blog.blanK
 cd blog.blanK
+git submodule init
+git submodule update
+
 hugo server
 ```
 打开浏览器：[http://localhost:1313](http://localhost:1313)
@@ -20,10 +20,10 @@ hugo server
 
 见 [config.toml](config.toml)
 
-# 部署
+# 更新部署
 
 每次更新文件后使用脚本提交更新。`deploy.sh`
 
 # 更新
 
-2017.6.3 更换主题**Gemini**
+2017.6.3 更换主题**Gemini**, 并使用`git submodule`引用。
